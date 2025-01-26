@@ -5,12 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeamMate - Find Your Hackathon Team</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.webp">
+    
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
-        <h1>TeamMate</h1>
-        <p>Find your perfect team for hackathons and projects!</p>
+        <h1>TeamFinder</h1>
+        <p style="text-align: center;">Find your perfect team for hackathons and projects!</p>
+        <div class="items">
+            <li><a href="index.html">Home       </a></li>
+            <li><a href="about.html">About Us   </a></li>
+            <li><a href="support.html">Support    </a></li>
+            <li><a href="#teams">Teams      </a></li>
+            <li><a href="#teams">Frontend   </a></li>
+            <li><a href="#teams">Backend    </a>  </li>
+            <li><a href="#teams">Full Stack </a>  </li>
+            <li><a href="#teams">DSA        </a> </li>
+            <li><a href="#teams">Java       </a> </li>
+            <li><a href="#teams">Python     </a> </li>
+            <li><a href="#teams">C++        </a> </li>
+            <li><a href="#teams">C          </a> </li>
+            <li><a href="#teams">React      </a> </li>
+            <li><a href="#teams">Node Js    </a> </li>
+            <li><a href="#teams">UI/Ux      </a> </li>
+            <li><a href="#teams">Ed Tech    </a> </li>
+            <li><a href="#teams">Designing   </a> </li>
+           
+        </div>
+       <div class="searchbar">
+        <input type="search" name="" id="" placeholder="Search Here">
+       </div>
     </header>
 
     <!-- Main Section -->
@@ -31,16 +57,25 @@
                 <label for="preferences">Project Preferences:</label>
                 <input type="text" id="preferences" placeholder="e.g., Healthcare, EdTech" required>
 
-                <button type="submit">Submit</button>
+                <button type="submit" onclick="submitbutton(event)">Submit</button>
+                <div id="submitModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Submitted successfully!</p>
+                    </div>
+                </div>
             </form>
+          
+        
         </section>
 
        
-        <section class="team-section">
+        <section class="team-section" id="teams">
             <h2>Suggested Teams</h2>
             <ul id="team-list">
             </ul>
         </section>
+
     </main>
 
     <!-- Footer -->
@@ -48,6 +83,6 @@
         <p>&copy; 2025 TeamMate | All Rights Reserved</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
