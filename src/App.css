@@ -1,0 +1,255 @@
+/*  Set Background Image*/
+body {
+    background: url('2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+/* NAVBAR CONTAINER */
+ .header {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+    justify-content: space-between;
+  }
+  
+  /* LOGO */
+   .imglogo {
+    max-width: 120px;
+    height: auto;
+  }
+  
+  /* TOP NAV ITEMS (Horizontal) */
+  .top-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Increased spacing */
+    margin-left: 40px;
+  }
+  
+  .top-nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 10px 15px; /* Spaced clickable area */
+  } 
+   
+  .top-nav a:hover {
+    color: #ffcc00;
+  }
+  
+  /* SEARCH BAR */
+  .searchbar {
+    margin-left: auto;
+  }
+  
+  .searchbar input {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 200px;
+    outline: none;
+  }
+  
+  /* SIDEBAR NAV (Vertical) */
+ /* Sidebar Styles */
+/* Sidebar Styles */
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: #333;
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  /* Sidebar Links */
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    font-size: 18px;
+  }
+  
+  /* Toggle Button */
+  .toggle-btn {
+    position: fixed;
+    left: 15px;
+    top: 15px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 1100;
+    margin:15px;
+  }
+  
+  /* Close Button (Inside Sidebar) */
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 25px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: lighter;
+  }
+  
+  /* Header Navbar */
+  /* Header Navbar */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  /* Add spacing between toggle button & other elements */
+  .header .toggle-btn {
+    margin-right: 20px; /* Adjust this value for desired spacing */
+  }
+
+  .bulb{
+    margin-right: 65px;
+  }
+  
+  /* Logo */
+  .imglogo {
+    width: 100px;
+    margin-right: 20px; /* Add some space between logo and nav links */
+  }
+  
+  /* Navbar Links */
+  .top-nav {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Search Bar */
+  .searchbar {
+    margin-left: auto; /*Push search bar to the right */
+    float:right;
+  }
+  
+  .searchbar input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    color: black;
+    background: white;
+  }
+  
+  
+  /* Header Navbar */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .imglogo {
+    width: 100px;
+    margin:80px;
+  }
+  
+  .top-nav {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .top-nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    transition: background 0.3s ease;
+  }
+  
+  .top-nav a:hover {
+    background: #444;
+  }
+  
+  /* Search Bar */
+  .searchbar input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  
+  /* Responsive */
+   @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .top-nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  
+    .searchbar {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+  
+    .sidebar {
+      width: 180px;
+    }
+  }
+  
+  h2{
+    color: #fff;
+  }
+   
+  .footer {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  } 
+
