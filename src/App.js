@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 import "./App.css";
+import "./About.css";
+import "./script.js"
+import teammatesData from "./teammates.json";
+
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(
@@ -11,12 +15,15 @@ export default function App() {
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
+      document.body.style.backgroundImage = "url('2.jpg')";
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+      document.body.style.backgroundImage = "url('4.jpg')";
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
+  
 
   return (
     <Router>
@@ -103,8 +110,193 @@ function Header({ darkMode, setDarkMode }) {
   );
 }
 
-function Home() { return <div><h2>Home</h2></div>; }
-function About() { return <div><h2>About Us</h2></div>; }
+function Home() {
+  const [formData, setFormData] = useState({
+    name: "",
+    skills: "",
+    availability: "",
+    preferences: "",
+  });
+useEffect(() => {
+    setTeamList(teammatesData); // Set team list from imported data
+  }, []);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [teamList, setTeamList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  
+  
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  
+    const newTeammate = { ...formData };
+  
+    setTeamList((prevList) => [...prevList, newTeammate]); // Update the state
+    alert("Teammate added successfully!");
+  
+    setModalVisible(true);
+    setFormData({ name: "", skills: "", availability: "", preferences: "" });
+  };
+  
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch("/get_teammates");
+        const data = await response.json();
+        setTeamList(data);
+      } catch (error) {
+        console.error("Error fetching teams:", error);
+      }
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const filteredTeams = teamList.filter((teammate) =>
+    teammate.name.toLowerCase().includes(searchQuery)
+  );
+
+  return (
+    <main>
+      <section className="profile-section">
+        <h2>Create Your Profile</h2>
+        <form id="profile-form" onSubmit={handleSubmit}>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Enter your name"
+            required
+          />
+
+          <label htmlFor="skills">Skills (comma-separated):</label>
+          <input
+            type="text"
+            id="skills"
+            value={formData.skills}
+            onChange={handleInputChange}
+            placeholder="e.g., Frontend, Backend, UI/UX"
+            required
+          />
+
+          <label htmlFor="availability">Availability (hours/week):</label>
+          <input
+            type="number"
+            id="availability"
+            value={formData.availability}
+            onChange={handleInputChange}
+            min="1"
+            max="40"
+            style={{color:'black'}}
+            required
+          />
+
+          <label htmlFor="preferences">Project Preferences:</label>
+          <input
+            type="text"
+            id="preferences"
+            value={formData.preferences}
+            onChange={handleInputChange}
+            placeholder="e.g., Healthcare, EdTech"
+            required
+          />
+
+          <button type="submit">Submit</button>
+        </form>
+
+        {modalVisible && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setModalVisible(false)}>
+                &times;
+              </span>
+              <p>Submitted successfully!</p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <section className="team-section" id="teams">
+        <h2>Suggested Teammates</h2>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search teams..."
+          onChange={handleSearch}
+        />
+        <ul id="team-list">
+          {filteredTeams.map((teammate, index) => (
+            <li key={index}>{teammate.name}</li>
+          ))}
+        </ul>
+      </section>
+    </main>
+  );
+}
+
+function About() {
+  return (
+    <div className="about-container">
+      <div className="about-content">
+        <h1 className="about-title">About Our Platform</h1>
+        <p className="about-text">
+          Welcome to our collaborative platform, where developers and designers 
+          come together to build amazing projects! Whether you're a frontend 
+          enthusiast, backend guru, or a UI/UX expert, this is the place to connect, 
+          collaborate, and create.
+        </p>
+
+        {/* Mission Section */}
+        <div className="about-grid">
+          <div className="about-box">
+            <h3 className="about-box-title">Find Your Team</h3>
+            <p className="about-box-text">
+              Connect with like-minded developers, join projects, and work on 
+              exciting ideas together.
+            </p>
+          </div>
+
+          <div className="about-box">
+            <h3 className="about-box-title">Enhance Your Skills</h3>
+            <p className="about-box-text">
+              Learn and grow by collaborating on real-world projects.
+            </p>
+          </div>
+
+          <div className="about-box">
+            <h3 className="about-box-title">Build a Portfolio</h3>
+            <p className="about-box-text">
+              Gain hands-on experience by working on real projects and showcasing 
+              them to potential employers.
+            </p>
+          </div>
+
+          <div className="about-box">
+            <h3 className="about-box-title">Stay Updated</h3>
+            <p className="about-box-text">
+              Keep up with the latest industry trends and best practices.
+            </p>
+          </div>
+        </div>
+
+        <button className="about-button">Join Us Today!</button>
+      </div>
+    </div>
+  );
+}
+
 function Support() { return <div><h2>Support</h2></div>; }
 function Teams() { return <div><h2>Teams</h2></div>; }
 function Frontend() { return <div><h2>Frontend</h2></div>; }

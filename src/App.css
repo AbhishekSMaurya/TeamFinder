@@ -1,12 +1,41 @@
 /*  Set Background Image*/
 body {
-    background: url('2.jpg') no-repeat center center fixed;
     background-size: cover;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background 0.5s ease-in-out;
   }
   
+  
+/* Global Theme Variables */
+:root {
+    /* Light Mode Colors */
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --title-color: #222;
+    --box-light: #ffffff;
+    --text-light: #555;
+    --btn-color: #ff7f50;
+    --btn-hover: #ff4500;
+    
+    /* Dark Mode Colors */
+    --bg-dark: #121212;
+    --text-dark: #e0e0e0;
+    --box-dark: rgba(40, 40, 40, 0.85);
+}
+
+/* Apply Dark Mode */
+.dark {
+    --bg-color: var(--bg-dark);
+    --text-color: var(--text-dark);
+    --title-color: #f1f1f1;
+    --box-light: var(--box-dark);
+    --text-light: rgba(255, 255, 255, 0.9);
+    --btn-color: #ff6347;
+    --btn-hover: #ff4500;
+}
+
+
 /* NAVBAR CONTAINER */
  .header {
     display: flex;
@@ -239,9 +268,7 @@ body {
     }
   }
   
-  h2{
-    color: #fff;
-  }
+  
    
   .footer {
     background: rgba(0, 0, 0, 0.6);
@@ -252,4 +279,171 @@ body {
     bottom: 0;
     width: 100%;
   } 
+
+  h2{
+    color:#fff;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 20px;
+    color: #fff; /* Adjusted for better contrast */
+}
+
+/* Profile Form Styling */
+.profile-section {
+    background: rgba(255, 255, 255, 0.12); /* Slightly more opacity for clarity */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.profile-section h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Submit Button */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    background: #4caf50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background: #45a049;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Darkened backdrop for readability */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #222; /* Darker shade for dark mode */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #888; /* Darker border for contrast */
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.team-section {
+    background: rgba(255, 255, 255, 0.12); /* Slightly more visible */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.team-section h2 {
+    text-align: center;
+}
+
+.light-mode .team-section h2 {
+    color: black; /* Ensures visibility in light mode */
+}
+
+.dark-mode .team-section h2 {
+    color: white; /* Ensures visibility in dark mode */
+}
+
+#team-list {
+    list-style: none;
+    padding: 0;
+}
+
+#team-list li {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#team-list li:hover{
+    cursor:pointer;
+    background-color: white;
+    color:black;
+}
+
+.h2 {
+    color: black; /* Default for light mode */
+}
+
+.dark-mode h2 {
+    color: white; /* Adjust for dark mode */
+}
 
