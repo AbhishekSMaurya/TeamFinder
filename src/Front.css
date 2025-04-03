@@ -1,0 +1,29 @@
+/* Default light theme */
+.frontend-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    margin-top:20vh;
+  }
+  
+.frontend-container h2{
+    color: #4d94db;
+}
+
+  .frontend-card {
+    background: var(--card-bg, #f9f9f9);
+    border: 1px solid var(--border-color, #ccc);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-align: left;
+  }
+  
+  /* Dark mode styles */
+  .dark-mode {
+    --card-bg: #2c2c2c;
+    --border-color: #444;
+    color: white;
+    background: #1a1a1a;
+  }
+

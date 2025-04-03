@@ -2,12 +2,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var modal = document.getElementById("submitModal");
     var span = document.getElementsByClassName("close")[0];
     var form = document.getElementById("profile-form");
+    var submitBtn = document.getElementById("submitBtn"); // Get the button
 
     // Function to handle form submission
     function submitbutton(event) {
         event.preventDefault();
-        form.reset();
-        modal.style.display = "block";
+        if (form) form.reset();
+        if (modal) modal.style.display = "block";
+    }
+
+    // Attach event listener to the submit button
+    if (submitBtn) {
+        submitBtn.addEventListener("click", submitbutton);
     }
 
     // Ensure elements exist before adding event listeners
@@ -82,4 +88,3 @@ document.addEventListener("DOMContentLoaded", function () {
         searchInput.addEventListener("input", searchTeams);
     }
 });
-

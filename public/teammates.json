@@ -1,0 +1,21 @@
+[
+    {
+      "name": "John Doe",
+      "skills": "React, JavaScript, UI/UX",
+      "availability": "20 hours/week",
+      "preferences": "Frontend, EdTech"
+    },
+    {
+      "name": "Jane Smith",
+      "skills": "Node.js, Express, MongoDB",
+      "availability": "15 hours/week",
+      "preferences": "Backend, Healthcare"
+    },
+    {
+      "name": "Alice Johnson",
+      "skills": "C++, Data Structures, Algorithms",
+      "availability": "10 hours/week",
+      "preferences": "DSA, Competitive Programming"
+    }
+  ]
+  

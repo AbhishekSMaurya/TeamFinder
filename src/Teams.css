@@ -1,0 +1,188 @@
+/* General Wrapper */
+.wrapper {
+    max-width: 80%;
+    margin: auto;
+    text-align: center;
+    font-family: "Arial", sans-serif;
+  }
+  
+  /* List of Teams */
+  .group-items {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  /* Team Card */
+  .card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .card strong {
+    font-size: 20px;
+    color: #333;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Buttons */
+  .action-btn {
+    margin: 8px;
+    padding: 10px 14px;
+    border: none;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .action-btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Team Member List */
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  /* Individual Member Item */
+  .details-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin: 8px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+  }
+  
+  .details-item:hover {
+    background: #f1f1f1;
+  }
+  
+  /* Member Avatar */
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 2px solid #ddd;
+  }
+  
+  /* Member Details */
+  .content {
+    text-align: left;
+  }
+  
+  .content strong {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .content p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .content a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .content a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Social Links */
+  .links {
+    margin-top: 5px;
+  }
+  
+  .links a {
+    margin-right: 10px;
+    color: #555;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  
+  .links a:hover {
+    color: #007bff;
+  }
+  
+  /* Create Team Button */
+  .create-btn {
+    display: block;
+    margin: 20px auto;
+    background: #28a745;
+    color: white;
+    padding: 12px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .create-btn:hover {
+    background: #218838;
+  }
+  
+  /* Form Styling */
+  .form-box {
+    width: 50%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .form-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .form-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .form-box button {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .form-box button:hover {
+    background: #218838;
+  }
+  

@@ -280,9 +280,7 @@ body {
     width: 100%;
   } 
 
-  h2{
-    color:#fff;
-  }
+ 
 
   main {
     display: flex;
@@ -306,6 +304,14 @@ body {
 .profile-section h2 {
     text-align: center;
     margin-bottom: 15px;
+}
+
+.light .profile-section h2{
+    color:black
+}
+
+.dark .profile-section h2{
+    color:#fff;
 }
 
 form label {
@@ -345,6 +351,10 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background: #45a049;
+}
+
+.dark .team-section h2{
+    color:#fff;
 }
 
 /* Modal Styling */
@@ -433,17 +443,21 @@ button[type="submit"]:hover {
     text-align: center;
 }
 
+.dark-mode .team-list ul li{
+    color:black;
+}
+
 #team-list li:hover{
     cursor:pointer;
     background-color: white;
     color:black;
 }
 
-.h2 {
-    color: black; /* Default for light mode */
+.light-mode .text-tr{
+    color:#121212;
 }
 
-.dark-mode h2 {
+.dark-mode .team-section {
     color: white; /* Adjust for dark mode */
 }
 

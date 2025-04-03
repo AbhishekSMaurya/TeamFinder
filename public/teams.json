@@ -1,0 +1,68 @@
+{
+    "teams": [
+      {
+        "id": 1,
+        "name": "Frontend Team",
+        "members": [
+          {
+            "id": 101,
+            "name": "Abhishek Maurya",
+            "role": "Frontend Developer",
+            "image": "/images/abhishek.jpg",
+            "email": "abhishek@example.com",
+            "socials": {
+              "linkedin": "https://linkedin.com/in/abhishek",
+              "github": "https://github.com/abhishek",
+              "twitter": "https://twitter.com/abhishek"
+            }
+          },
+          {
+            "id": 102,
+            "name": "Ananya Sharma",
+            "role": "UI/UX Designer",
+            "image": "/images/ananya.jpg",
+            "email": "ananya@example.com",
+            "socials": {
+              "linkedin": "https://linkedin.com/in/ananya",
+              "dribbble": "https://dribbble.com/ananya",
+              "behance": "https://behance.net/ananya"
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Backend Team",
+        "members": [
+          {
+            "id": 201,
+            "name": "Rahul Verma",
+            "role": "Backend Developer",
+            "image": "/images/rahul.jpg",
+            "email": "rahul@example.com",
+            "socials": {
+              "linkedin": "https://linkedin.com/in/rahul",
+              "github": "https://github.com/rahul"
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "Product Management Team",
+        "members": [
+          {
+            "id": 301,
+            "name": "Simran Kaur",
+            "role": "Product Manager",
+            "image": "/images/simran.jpg",
+            "email": "simran@example.com",
+            "socials": {
+              "linkedin": "https://linkedin.com/in/simran"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  
