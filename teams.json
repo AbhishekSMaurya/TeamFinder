@@ -1,0 +1,128 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Frontend Team",
+      "members": [
+        {
+          "id": 101,
+          "name": "Abhishek Maurya",
+          "role": "Frontend Developer",
+          "image": "https://i.pravatar.cc/150?u=Abhishek",
+          "email": "abhishek@example.com",
+          "socials": {
+            "linkedin": "https://linkedin.com/in/abhishek",
+            "github": "https://github.com/abhishek",
+            "twitter": "https://twitter.com/abhishek"
+          }
+        },
+        {
+          "id": 102,
+          "name": "Ananya Sharma",
+          "role": "UI/UX Designer",
+          "image": "https://i.pravatar.cc/150?u=Ananya",
+          "email": "ananya@example.com",
+          "socials": {
+            "linkedin": "https://linkedin.com/in/ananya",
+            "dribbble": "https://dribbble.com/ananya",
+            "behance": "https://behance.net/ananya"
+          }
+        },
+        {
+          "name": "Romario Shepherd",
+          "email": "romarioshepherd@gmail.com",
+          "image": "",
+          "role": "Member",
+          "socials": {}
+        },
+        {
+          "name": "Satpal sir",
+          "email": "satpal@gmail.com",
+          "image": "https://i.pravatar.cc/150?u=Satpal",
+          "role": "Member",
+          "socials": {}
+        },
+        {
+          "name": "First",
+          "email": "first@gmail.com",
+          "image": "",
+          "role": "Member",
+          "socials": {}
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Backend Team",
+      "members": [
+        {
+          "id": 201,
+          "name": "Rahul Verma",
+          "role": "Backend Developer",
+          "image": "/images/rahul.jpg",
+          "email": "rahul@example.com",
+          "socials": {
+            "linkedin": "https://linkedin.com/in/rahul",
+            "github": "https://github.com/rahul"
+          }
+        },
+        {
+          "name": "Romario Shepherd",
+          "email": "romarioshepherd@gmail.com",
+          "image": "",
+          "role": "Member",
+          "socials": {}
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Product Management Team",
+      "members": [
+        {
+          "id": 301,
+          "name": "Simran Kaur",
+          "role": "Product Manager",
+          "image": "/images/simran.jpg",
+          "email": "simran@example.com",
+          "socials": {
+            "linkedin": "https://linkedin.com/in/simran"
+          }
+        },
+        {
+          "name": "Romario Shepherd",
+          "email": "romarioshepherd@gmail.com",
+          "image": "https://i.pravatar.cc/150?u=Romario",
+          "role": "Member",
+          "socials": {}
+        }
+      ]
+    },
+    {
+      "name": "Code Crushers",
+      "members": [
+        {
+          "name": "Abhishek",
+          "email": "",
+          "image": "",
+          "role": "",
+          "socials": {}
+        },
+        {
+          "name": "Ansh",
+          "email": "",
+          "image": "",
+          "role": "",
+          "socials": {}
+        }
+      ],
+      "description": "Specialized in making react apps",
+      "skills": [
+        "HTML",
+        "CSS",
+        "JS"
+      ],
+      "id": 1746251732844
+    }
+  ]
+}

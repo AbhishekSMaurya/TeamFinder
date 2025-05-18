@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "authorId": 2,
+    "content": "Excited to start a new project!",
+    "likes": [
+      1
+    ],
+    "dislikes": [],
+    "shares": 0
+  },
+  {
+    "authorId": 1,
+    "content": "Post 1",
+    "likes": [
+      1
+    ],
+    "dislikes": [],
+    "shares": 1,
+    "id": 2
+  },
+  {
+    "authorId": 1,
+    "content": "Heelo",
+    "likes": [
+      1
+    ],
+    "dislikes": [],
+    "shares": 0,
+    "id": 3
+  },
+  {
+    "authorId": 1,
+    "content": "Working",
+    "likes": [
+      1
+    ],
+    "dislikes": [],
+    "shares": 0,
+    "id": 4
+  },
+  {
+    "authorId": 1,
+    "content": "Hello",
+    "likes": [
+      1
+    ],
+    "dislikes": [],
+    "shares": 0,
+    "id": 5
+  },
+  {
+    "authorId": {
+      "name": "Romario Shepherd",
+      "email": "romarioshepherd@gmail.com",
+      "skills": "UI/UX",
+      "availability": "8",
+      "preferences": "Sportd",
+      "password": "romario1234"
+    },
+    "content": "JavaScript is easy",
+    "likes": [],
+    "dislikes": [],
+    "shares": 0,
+    "id": 6
+  },
+  {
+    "authorName": "Romario Shepherd",
+    "content": "JavaScript is easy",
+    "likes": [],
+    "dislikes": [],
+    "shares": 0,
+    "id": 7
+  },
+  {
+    "authorName": "Satpal sir",
+    "content": "JavaScript is easy",
+    "likes": [
+      null
+    ],
+    "dislikes": [],
+    "shares": 0,
+    "id": 8
+  },
+  {
+    "authorName": "First",
+    "content": "Text",
+    "likes": [],
+    "dislikes": [],
+    "shares": 0,
+    "id": 9
+  },
+  {
+    "authorName": "First",
+    "content": "Hello",
+    "likes": [],
+    "dislikes": [],
+    "shares": 0,
+    "id": 10
+  }
+]

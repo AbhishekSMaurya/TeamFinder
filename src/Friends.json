@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "name": "Alice",
+      "friends": [2],
+      "requestsSent": [3],
+      "requestsReceived": []
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "friends": [1],
+      "requestsSent": [],
+      "requestsReceived": []
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "friends": [],
+      "requestsSent": [],
+      "requestsReceived": [1]
+    }
+  ]
+  

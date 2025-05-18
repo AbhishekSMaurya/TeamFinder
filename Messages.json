@@ -1,0 +1,9 @@
+[
+    {
+      "senderId": "john@example.com",
+      "receiverId": "jane@example.com",
+      "text": "Hey Jane!",
+      "timestamp": "2024-04-12T13:00:00.000Z"
+    }
+  ]
+  

@@ -1,0 +1,258 @@
+.projects-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.project-form input[type="text"],
+.project-form input[type="url"],
+.project-form input[type="file"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.project-form button {
+  padding: 0.6rem;
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.project-form button:hover {
+  background-color: #084d9a;
+}
+
+.search-bar {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+
+.projects-container {
+  max-width: 800px; /* ✅ Same width for everything (including search bar and cards) */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.projects-container h2{
+  color:#fff;
+}
+
+.search-bar {
+  width: 100%; /* ✅ Search bar fits full container width */
+  padding: 10px 15px;
+  margin-bottom: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.project-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Main container */
+.projects-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--bg-input);
+  color: var(--text-color);
+}
+
+/* Grid and Card */
+.project-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  padding: 20px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px var(--shadow-hover);
+}
+
+/* Project Image */
+.project-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background: #f9f9f9;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Text */
+.project-card h4 {
+  font-size: 22px;
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  font-size: 16px;
+  text-align: center;
+  color: var(--text-color-light);
+  margin-bottom: 10px;
+}
+
+/* Link */
+.project-card a {
+  display: block;
+  text-align: center;
+  color: var(--link-color);
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.project-card a:hover {
+  text-decoration: underline;
+}
+
+/* Variables for Light Mode */
+:root {
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --border-color: #ccc;
+  --text-color: #333;
+  --text-color-light: #555;
+  --link-color: #0077ff;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+}
+
+/* Variables for Dark Mode */
+.dark {
+  --bg-card: #1e1e1e;
+  --bg-input: #2c2c2c;
+  --border-color: #444;
+  --text-color: #f1f1f1;
+  --text-color-light: #aaa;
+  --link-color: #66b2ff;
+  --shadow: rgba(255, 255, 255, 0.05);
+  --shadow-hover: rgba(255, 255, 255, 0.08);
+}
+
+
+
+form input {
+  color: black;
+}
+
+.dark .projects-container {
+  background-color: rgb(29, 26, 26);
+}
+
+.dark .projects-container h2{
+  color:#fff;
+}
+
+.dark .project-card {
+  background-color: rgb(29, 26, 26);
+}
+
+.dark .project-form {
+  background-color: rgb(29, 26, 26);
+}
+
+.dark form input {
+  color: white;
+}
+
+.projects-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  background: linear-gradient(135deg, #f0f4ff, #e6eeff);
+  background-image: url('5.jpeg');
+  background-size: cover;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: 20px;
+  color: #fff;
+}
+
+.projects-banner-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.projects-banner-text p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* adds contrast on bright backgrounds */
+}
+
+
+.share-project-btn {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.share-project-btn:hover {
+  background-color: #0059c1;
+}
+
+.file-link {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.file-link:hover {
+  background-color: #0056b3;
+}

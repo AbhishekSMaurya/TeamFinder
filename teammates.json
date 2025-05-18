@@ -1,0 +1,72 @@
+[
+  {
+    "avatar": "https://i.pravatar.cc/150?u=vansh",
+    "name": "ABHISHEK MAURYA",
+    "email": "abhishek@gmail.com",
+    "skills": "Frontend",
+    "availability": "5",
+    "preferences": "Tech",
+    "password": "abhi1234"
+  },
+  {
+    "avatar": "https://i.pravatar.cc/150?u=luv",
+    "name": "Luv Sharma",
+    "email": "luv@gmail.com",
+    "skills": "Graphic Designing",
+    "availability": "5",
+    "preferences": "Tech",
+    "password": "luv5345"
+  },
+  {
+    "avatar": "https://i.pravatar.cc/150?u=john",
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "skills": "UI/UX",
+    "availability": "10",
+    "preferences": "Educational",
+    "password": "doejohn"
+  },
+  {
+    "avatar": "https://i.pravatar.cc/150?u=Ben",
+    "name": "Ben",
+    "email": "ben@gmail.com",
+    "skills": "Testing",
+    "availability": "4",
+    "preferences": "Non-tech",
+    "password": "ben892"
+  },
+  {
+    "avatar": "https://i.pravatar.cc/150?u=Tim",
+    "name": "Tim Dave",
+    "email": "tim@gmail.com",
+    "skills": "Leadership",
+    "availability": "10",
+    "preferences": "Organisational",
+    "password": "timd456"
+  },
+  {
+    "avatar": "https://i.pravatar.cc/150?u=Romario",
+    "name": "Romario Shepherd",
+    "email": "romarioshepherd@gmail.com",
+    "skills": "UI/UX",
+    "availability": "8",
+    "preferences": "Sportd",
+    "password": "romario1234"
+  },
+  {
+    "name": "Satpal sir",
+    "email": "satpal@gmail.com",
+    "skills": "Frontend",
+    "availability": "4",
+    "preferences": "Educational",
+    "password": "satpal1234"
+  },
+  {
+    "name": "First",
+    "email": "first@gmail.com",
+    "skills": "Frontend",
+    "availability": "7",
+    "preferences": "Tech",
+    "password": "first1234"
+  }
+]

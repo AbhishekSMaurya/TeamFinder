@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1746082209447,
+    "title": "AI",
+    "description": "Ai is taking over the world",
+    "tags": [
+      "AI"
+    ],
+    "link": "",
+    "user": {
+      "id": 1,
+      "name": "Abhishek Maurya",
+      "avatar": "https://i.pravatar.cc/150?u=vansh"
+    },
+    "date": "01/05/2025, 12:20:09",
+    "likes": [
+      1,
+      null,
+      null
+    ],
+    "comments": [
+      {
+        "user": {
+          "id": 1,
+          "name": "Abhishek Maurya",
+          "avatar": "https://i.pravatar.cc/150?u=vansh"
+        },
+        "text": "It is changing the world",
+        "time": "22:15:20"
+      }
+    ]
+  },
+  {
+    "id": 1746439314219,
+    "title": "JOBS",
+    "description": "Jobs are vanishing",
+    "tags": [
+      "Tech"
+    ],
+    "link": "",
+    "user": {
+      "id": 1,
+      "name": "Abhishek Maurya",
+      "avatar": "https://i.pravatar.cc/150?u=vansh"
+    },
+    "date": "05/05/2025, 15:31:54",
+    "likes": [
+      1
+    ],
+    "comments": [
+      {
+        "user": {
+          "id": 1,
+          "name": "Abhishek Maurya",
+          "avatar": "https://i.pravatar.cc/150?u=vansh"
+        },
+        "text": "Yes",
+        "time": "15:32:07"
+      }
+    ]
+  },
+  {
+    "id": 1746715547985,
+    "title": "Hiring",
+    "description": "We are looking for software developers in Delhi",
+    "tags": [
+      "Hiring"
+    ],
+    "link": "",
+    "user": {
+      "avatar": "https://i.pravatar.cc/150?u=Romario",
+      "name": "Romario Shepherd",
+      "email": "romarioshepherd@gmail.com",
+      "skills": "UI/UX",
+      "availability": "8",
+      "preferences": "Sportd",
+      "password": "romario1234"
+    },
+    "date": "08/05/2025, 20:15:47",
+    "likes": [
+      null,
+      null
+    ],
+    "comments": []
+  }
+]
