@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Chatbot = () => {
   const [feedback, setFeedback] = useState("");
@@ -12,10 +13,11 @@ const Chatbot = () => {
     }
 
     try {
-      // const response = await axios.post("http://localhost:5000/api/feedback", {
-      //   email,
-      //   feedback,
-      // });
+      const response = await axios.post("http://localhost:5000/api/feedback", {
+        email,
+        feedback,
+      });
+      console.log("Server response:", response.data);
       setStatus("✅ Thank you! Your feedback has been submitted.");
       setFeedback("");
       setEmail("");
