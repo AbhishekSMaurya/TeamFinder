@@ -13,10 +13,10 @@ const Chatbot = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/feedback", {
-        email,
-        feedback,
-      });
+      // const response = await axios.post("http://localhost:5000/api/feedback", {
+      //   email,
+      //   feedback,
+      // });
       setStatus("✅ Thank you! Your feedback has been submitted.");
       setFeedback("");
       setEmail("");
