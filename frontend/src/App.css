@@ -1,0 +1,525 @@
+/*  Set Background Image*/
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background 0.5s ease-in-out;
+    min-height: 100vh;
+}
+
+
+/* Global Theme Variables */
+:root {
+    /* Light Mode Colors */
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --title-color: #222;
+    --box-light: #ffffff;
+    --text-light: #555;
+    --btn-color: #ff7f50;
+    --btn-hover: #ff4500;
+
+    /* Dark Mode Colors */
+    --bg-dark: #121212;
+    --text-dark: #e0e0e0;
+    --box-dark: rgba(40, 40, 40, 0.85);
+}
+
+/* Apply Dark Mode */
+.dark {
+    --bg-color: var(--bg-dark);
+    --text-color: var(--text-dark);
+    --title-color: #f1f1f1;
+    --box-light: var(--box-dark);
+    --text-light: rgba(255, 255, 255, 0.9);
+    --btn-color: #ff6347;
+    --btn-hover: #ff4500;
+}
+
+
+/* NAVBAR CONTAINER */
+.header {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+    justify-content: space-between;
+}
+
+/* LOGO */
+.imglogo {
+    max-width: 120px;
+    height: auto;
+}
+
+/* TOP NAV ITEMS (Horizontal) */
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* Increased spacing */
+    margin-left: 40px;
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 10px 15px;
+    /* Spaced clickable area */
+}
+
+.top-nav a:hover {
+    color: #ffcc00;
+}
+
+/* SEARCH BAR */
+.searchbar {
+    margin-left: auto;
+}
+
+.searchbar input {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 200px;
+    outline: none;
+}
+
+/* SIDEBAR NAV (Vertical) */
+/* Sidebar Styles */
+/* Sidebar Styles */
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: #333;
+    transition: left 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 1000;
+    font-size: 30px;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+/* Sidebar Links */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    font-size: 18px;
+}
+
+/* Toggle Button */
+.toggle-btn {
+    position: fixed;
+    left: 15px;
+    top: 6px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 1100;
+    margin: 15px;
+    font-size: 30px;
+}
+
+/* Close Button (Inside Sidebar) */
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 25px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: lighter;
+}
+
+/* Header Navbar */
+/* Header Navbar */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px 20px;
+    color: white;
+}
+
+/* Add spacing between toggle button & other elements */
+.header .toggle-btn {
+    margin-right: 20px;
+    /* Adjust this value for desired spacing */
+}
+
+.bulb {
+    margin-right: 65px;
+}
+
+/* Logo */
+.imglogo {
+    width: 100px;
+    margin-right: 20px;
+    /* Add some space between logo and nav links */
+}
+
+/* Navbar Links */
+.top-nav {
+    display: flex;
+    gap: 20px;
+}
+
+/* Search Bar */
+.searchbar {
+    margin-left: auto;
+    /*Push search bar to the right */
+    float: right;
+}
+
+.searchbar input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    color: black;
+    background: white;
+}
+
+
+/* Header Navbar */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px 20px;
+    color: white;
+}
+
+.imglogo {
+    width: 100px;
+    margin: 80px;
+}
+
+.top-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    transition: background 0.3s ease;
+}
+
+.top-nav a:hover {
+    background: #444;
+}
+
+/* Search Bar */
+.searchbar input {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .top-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .searchbar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+}
+
+
+
+.footer {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 20px;
+    color: #fff;
+    /* Adjusted for better contrast */
+}
+
+/* Profile Form Styling */
+.profile-section {
+    background: rgba(255, 255, 255, 0.12);
+    /* Slightly more opacity for clarity */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.profile-section h2 {
+    color:#121212;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+
+
+.dark .profile-section h2 {
+    color: #fff;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #121212;
+}
+
+.dark form label{
+    color:#fff;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Submit Button */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    background: #4caf50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background: #45a049;
+}
+
+.dark .team-section h2 {
+    color: #fff;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    /* Darkened backdrop for readability */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #222;
+    /* Darker shade for dark mode */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: white;
+    color: #121212;
+    transition: background 0.3s, color 0.3s;
+}
+
+.dark #searchInput {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid #666;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #4caf50;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark #searchInput:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.team-section {
+    background: rgba(255, 255, 255, 0.12);
+    /* Slightly more visible */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.team-section h2 {
+    text-align: center;
+}
+
+.light-mode .team-section h2 {
+    color: black;
+    /* Ensures visibility in light mode */
+}
+
+.dark-mode .team-section h2 {
+    color: white;
+    /* Ensures visibility in dark mode */
+}
+
+#team-list {
+    list-style: none;
+    padding: 0;
+}
+
+#team-list li {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.dark-mode .team-list ul li {
+    color: black;
+}
+
+#team-list li:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+.text-tr {
+    color: #121212;
+}
+
+.dark .text-tr{
+    color:#fff;
+}
+
+.dark-mode .team-section {
+    color: white;
+    /* Adjust for dark mode */
+}
+
+.search-results {
+    padding: 1rem;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.results-list {
+    list-style: none;
+    padding: 0;
+}
+
+.result-card {
+    background: var(--card-bg, #f9f9f9);
+    border: 1px solid var(--border-color, #ccc);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.dark-mode .result-card {
+    --card-bg: #2c2c2c;
+    --border-color: #444;
+    color: white;
+}

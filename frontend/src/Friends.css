@@ -1,0 +1,56 @@
+.friends-page {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  
+  .section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .card {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card p {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .card button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .card button:hover {
+    background-color: #2980b9;
+  }
+  
+  .card button:last-child {
+    background-color: #e74c3c;
+  }
+  
+  .card button:last-child:hover {
+    background-color: #c0392b;
+  }
+  
+  .empty {
+    font-style: italic;
+    color: #999;
+  }
+  
