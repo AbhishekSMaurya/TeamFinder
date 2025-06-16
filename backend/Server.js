@@ -1,0 +1,274 @@
+const express = require("express");
+const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
+const axios = require('axios');
+const app = express();
+const PORT =  process.env.PORT || 5000;
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const path = require("path");
+const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
+
+
+// Middleware
+app.use(cors());
+app.use(express.json()); // for parsing application/json
+
+const teammates = [];
+
+app.get("/api/teammates", (req, res) => {
+  db.all("SELECT * FROM teammates", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+app.post("/api/teammates", (req, res) => {
+  const { name, email, skills, availability, preferences, password } = req.body;
+  const stmt = `INSERT INTO teammates (name, email, skills, availability, preferences, password)
+                VALUES (?, ?, ?, ?, ?, ?)`;
+  db.run(stmt, [name, email, skills, availability, preferences, password], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id: this.lastID, ...req.body });
+  });
+});
+
+
+app.post("/api/feedback", (req, res) => {
+  const { email, feedback } = req.body;
+
+  if (!feedback || typeof feedback !== "string") {
+    return res.status(400).json({ message: "Feedback is required." });
+  }
+
+  const timestamp = new Date().toISOString();
+  const emailValue = email || "Anonymous";
+
+  const stmt = `INSERT INTO feedback (email, feedback, timestamp) VALUES (?, ?, ?)`;
+  db.run(stmt, [emailValue, feedback, timestamp], function (err) {
+    if (err) return res.status(500).json({ message: "Failed to save feedback." });
+    res.json({ message: "Feedback received!" });
+  });
+});
+
+app.get("/api/feedback", (req, res) => {
+  db.all("SELECT * FROM feedback", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+
+// POST /api/teams/:id/join
+app.post('/api/teams/:id/join', (req, res) => {
+  const teamId = parseInt(req.params.id);
+  const { name, email } = req.body;
+  // Simulate response
+  res.json({ message: `Member ${name} with email ${email} added to team ${teamId}` });
+});
+
+
+app.get("/api/teams", (req, res) => {
+  db.all("SELECT * FROM teams", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ teams: rows });
+  });
+});
+
+
+app.post("/api/teams", (req, res) => {
+  const { name, description, skills } = req.body;
+  const stmt = `INSERT INTO teams (name, description, skills) VALUES (?, ?, ?)`;
+  db.run(stmt, [name, description, skills], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id: this.lastID, name, description, skills });
+  });
+});
+
+app.get("/api/messages", (req, res) => {
+  db.all("SELECT * FROM messages", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+
+// Save message
+app.post("/api/messages", (req, res) => {
+  const { senderId, receiverId, text } = req.body;
+  const timestamp = new Date().toISOString();
+  const stmt = `INSERT INTO messages (senderId, receiverId, text, timestamp) VALUES (?, ?, ?, ?)`;
+  db.run(stmt, [senderId, receiverId, text, timestamp], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id: this.lastID, senderId, receiverId, text, timestamp });
+  });
+});
+
+
+// POST a new teammate
+
+// Get all posts
+app.get("/api/posts", (req, res) => {
+  db.all("SELECT * FROM posts", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+// Create a new post
+app.post("/api/posts", (req, res) => {
+  const { title, content } = req.body;
+  const stmt = `INSERT INTO posts (title, content) VALUES (?, ?)`;
+  db.run(stmt, [title, content], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id: this.lastID, title, content });
+  });
+});
+
+
+// Update existing post
+app.put("/api/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, content } = req.body;
+  db.run(`UPDATE posts SET title = ?, content = ? WHERE id = ?`, [title, content, id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Post updated" });
+  });
+});
+
+
+// Get explore content
+app.get("/api/explore", (req, res) => {
+  db.all("SELECT * FROM posts", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+// POST update explore data (likes/comments)
+app.post('/api/explore/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedPost = req.body;
+
+  try {
+    const posts = JSON.parse(fs.readFileSync(exploreFile, 'utf-8'));
+    const index = posts.findIndex(p => p.id === parseInt(id));
+
+    if (index === -1) return res.status(404).json({ error: 'Post not found' });
+
+    posts[index] = updatedPost;
+
+    fs.writeFileSync(exploreFile, JSON.stringify(posts, null, 2), 'utf-8');
+    res.json({ message: 'Explore post updated' });
+  } catch (err) {
+    console.error('Failed to update post', err);
+    res.status(500).json({ error: 'Failed to update post' });
+  }
+});
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Setup multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);       // ✅ get .pdf or .zip
+    const name = Date.now() + ext;
+    cb(null, name); // ✅ example: 1715777769147.pdf
+  }
+});
+
+
+// Allow uploads folder to be accessed publicly
+
+
+
+app.get("/api/projects", (req, res) => {
+  db.all("SELECT * FROM projects", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+// Add a new project
+const projectStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  },
+});
+
+const projectUpload = multer({ storage: projectStorage });
+
+app.post("/api/projects", projectUpload.fields([{ name: "image" }, { name: "file" }]), (req, res) => {
+  const { title, tech, github } = req.body;
+  const image = req.files?.image ? `/uploads/${req.files.image[0].filename}` : null;
+  const file = req.files?.file ? `/uploads/${req.files.file[0].filename}` : null;
+
+  const stmt = `INSERT INTO projects (title, tech, github, image, file) VALUES (?, ?, ?, ?, ?)`;
+  db.run(stmt, [title, tech, github, image, file], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id: this.lastID, title, tech, github, image, file });
+  });
+});
+
+
+app.get("/api/announcements", (req, res) => {
+  db.all("SELECT * FROM announcements", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+// POST new announcement
+app.post("/api/announcements", (req, res) => {
+  const { title, content } = req.body;
+  const date = new Date().toISOString();
+  db.run(`INSERT INTO announcements (title, content, date) VALUES (?, ?, ?)`,
+    [title, content, date], function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ id: this.lastID, title, content, date });
+  });
+});
+
+app.put("/api/announcements/:id", (req, res) => {
+  const { title, content } = req.body;
+  const id = parseInt(req.params.id);
+  db.run(`UPDATE announcements SET title = ?, content = ? WHERE id = ?`,
+    [title, content, id], function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ message: "Announcement updated" });
+  });
+});
+
+
+
+app.get("/api/health", (req, res) => {
+  res.send("Server is alive!");
+});
+
+
+
+// ✅ Serve static frontend
+app.use(express.static(path.join(__dirname, "build")));
+
+// ✅ Catch-all route for React frontend
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+// ✅ Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
