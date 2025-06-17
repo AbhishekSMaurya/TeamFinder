@@ -92,7 +92,7 @@ function Header({ darkMode, setDarkMode }) {
   // Load teammates once
   const [teammates, setTeammates] = useState([]);
   useEffect(() => {
-    fetch("/api/teammates")
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
       .then((res) => res.json())
       .then((data) => {
         console.log("Teammates loaded:", data); // ✅ Check data format
@@ -181,7 +181,7 @@ function Home() {
     confirmPassword: ""
   });
   useEffect(() => {
-    fetch("/api/teammates")
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
       .then((res) => res.json())
       .then((data) => setTeamList(data))
       .catch((err) => console.error("Error loading teammates:", err));
@@ -223,7 +223,7 @@ function Home() {
 
 
     // ✅ POST the data to your backend
-    fetch("/api/teammates", {
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -554,7 +554,7 @@ function Teams({ currentUser }) {
   });
 
   useEffect(() => {
-    fetch("/api/teams")
+    fetch("https://teamfinder-53lz.onrender.com/api/teams")
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched teams:", data); // ✅ log to inspect
@@ -592,7 +592,7 @@ function Teams({ currentUser }) {
       socials: {},
     };
 
-    fetch(`/api/teams/${teamId}/join`, {
+    fetch(`${process.env.REACT_APP_API_BASE}/api/teammates/${teamId}/join`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMember), // ✅ send the object directly
@@ -645,7 +645,7 @@ function Teams({ currentUser }) {
       skills: newTeam.skills.split(',').map(skill => skill.trim())
     };
 
-    fetch("/api/teams", {
+    fetch("https://teamfinder-53lz.onrender.com/api/teams", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -685,45 +685,47 @@ function Teams({ currentUser }) {
         <h1>Our Teams</h1>
         <button className="create-btn" onClick={() => setShowForm(true)}>Create Your Team</button>
       </div>
-      <ul className="group-items">
-        {teams?.map((team, index) => (
-          <li key={team.id} className="card" >
-            <strong>{team.name}</strong>
-            <button className="action-btn" onClick={() => handleJoinTeam(team.id)}>Join </button>
+    <ul className="group-items">
+  {Array.isArray(teams) && teams.map((team, index) => (
+    <li key={team.id} className="card">
+      <strong>{team.name}</strong>
+      <button className="action-btn" onClick={() => handleJoinTeam(team.id)}>
+        Join
+      </button>
 
+      <button className="action-btn" onClick={() => toggleMembers(index)}>
+        {showMembers[index] ? "Hide Members" : "Show Members"}
+      </button>
 
-            <button className="action-btn" onClick={() => toggleMembers(index)}>
-              {showMembers[index] ? "Hide Members" : "Show Members"}
-            </button>
+      {showMembers[index] && (
+        <ul className="details-list">
+          {Array.isArray(team.members) && team.members.map((member) => (
+            <li key={member.id} className="details-item">
+              <img
+                src={member.image}
+                alt={member.name}
+                className="avatar"
+              />
+              <div className="content">
+                <strong>{member.name}</strong>
+                <p>{member.role}</p>
+                <a href={`mailto:${member.email}`}>{member.email}</a>
+                <div className="links">
+                  {member.socials && Object.entries(member.socials).map(([platform, link]) => (
+                    <a key={platform} href={link} target="_blank" rel="noopener noreferrer">
+                      {platform}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>
 
-            {showMembers[index] && (
-              <ul className="details-list">
-                {team.members.map((member) => (
-                  <li key={member.id} className="details-item">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="avatar"
-                    />
-                    <div className="content">
-                      <strong>{member.name}</strong>
-                      <p>{member.role}</p>
-                      <a href={`mailto:${member.email}`}>{member.email}</a>
-                      <div className="links">
-                        {Object.entries(member.socials).map(([platform, link]) => (
-                          <a key={platform} href={link} target="_blank" rel="noopener noreferrer">
-                            {platform}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
 
       {showForm && (
         <>
@@ -951,7 +953,7 @@ function Messages({ currentUser }) {
   useEffect(() => {
     if (!currentUser?.email) return;
 
-    fetch("/api/teammates")
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
       .then(res => res.json())
       .then(data => {
         setUsers(data.filter(u => u.email !== currentUser.email));
@@ -963,7 +965,7 @@ function Messages({ currentUser }) {
 
     console.log("Fetching messages between:", currentUser.email, selectedUser.email);
 
-    fetch("/api/messages")
+    fetch("https://teamfinder-53lz.onrender.com/api/messages")
       .then(res => res.json())
       .then(data => {
         const filtered = data.filter(msg =>
@@ -992,7 +994,7 @@ function Messages({ currentUser }) {
       timestamp: new Date().toISOString(),
     };
 
-    fetch("/api/messages", {
+    fetch("https://teamfinder-53lz.onrender.com/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1066,7 +1068,7 @@ function Posts({ currentUser }) {
   const [newPostContent, setNewPostContent] = useState('');
 
   useEffect(() => {
-    fetch("/api/posts")
+    fetch("https://teamfinder-53lz.onrender.com/api/posts")
       .then(res => res.json())
       .then(data => setPosts(data))
       .catch(err => console.error("Failed to load posts:", err));
@@ -1074,7 +1076,7 @@ function Posts({ currentUser }) {
 
   const updatePost = async (updatedPost) => {
     try {
-      await fetch(`/api/posts/${updatedPost.id}`, {
+      await fetch(`https://teamfinder-53lz.onrender.com/api/posts/${updatedPost.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPost),
@@ -1137,7 +1139,7 @@ function Posts({ currentUser }) {
       shares: 0
     };
 
-    fetch("/api/posts", {
+    fetch("https://teamfinder-53lz.onrender.com/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newPost),
@@ -1207,7 +1209,7 @@ function Explore() {
   const [commentInputs, setCommentInputs] = useState({});
 
   useEffect(() => {
-  fetch("/api/explore")
+  fetch("https://teamfinder-53lz.onrender.com/api/explore")
     .then(res => res.json())
     .then(data => {
       setContent(data);
@@ -1222,7 +1224,7 @@ function Explore() {
 
 
   const updatePost = (updatedItem) => {
-    fetch(`/api/explore/${updatedItem.id}`, {
+    fetch(`https://teamfinder-53lz.onrender.com/api/explore/${updatedItem.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedItem),
@@ -1248,7 +1250,7 @@ function Explore() {
 
   try {
     const post = updated.find(p => p.id === postId);
-    await fetch(`/api/explore/${postId}`, {
+    await fetch(`https://teamfinder-53lz.onrender.com/api/explore/${postId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(post)
@@ -1358,7 +1360,7 @@ function Projects() {
   });
   useEffect(() => {
     // Fetch existing projects
-    fetch("/api/projects")
+    fetch("https://teamfinder-53lz.onrender.com/api/projects")
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error("Error loading projects:", err));
@@ -1392,7 +1394,7 @@ function Projects() {
     if (form.file) formData.append("file", form.file);
 
     try {
-      const res = await fetch("/api/projects", {
+      const res = await fetch("https://teamfinder-53lz.onrender.com/api/projects", {
         method: "POST",
         body: formData,
       });
@@ -1549,7 +1551,7 @@ function Announcements({ currentUser }) {
     setForm({ ...form, [name]: value });
   };
   useEffect(() => {
-    fetch('/api/announcements')
+    fetch('https://teamfinder-53lz.onrender.com/api/announcements')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -1579,7 +1581,7 @@ function Announcements({ currentUser }) {
       likes: [],
       comments: []
     };
-    fetch('/api/announcements', {
+    fetch('https://teamfinder-53lz.onrender.com/api/announcements', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newPost)
@@ -1608,7 +1610,7 @@ function Announcements({ currentUser }) {
     setAnnouncements(updated);
 
     const likedPost = updated.find(p => p.id === postId);
-    fetch(`/api/announcements/${postId}`, {
+    fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(likedPost)
@@ -1636,7 +1638,7 @@ function Announcements({ currentUser }) {
 
     setAnnouncements(updated);
     const commentedPost = updated.find(p => p.id === postId);
-    fetch(`/api/announcements/${postId}`, {
+    fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(commentedPost)
@@ -1776,7 +1778,7 @@ function Login({ onLogin }) {
     }
 
     // Fetch teammates list on load
-    fetch("/api/teammates")
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
       .then((res) => res.json())
       .then((data) => setTeammates(data))
       .catch((err) => console.error("Error loading teammates:", err));
