@@ -1709,7 +1709,7 @@ function Announcements({ currentUser }) {
             <div className="user-info">
               <img src={post.user?.avatar || '/default-avatar.png'} alt="avatar" />
               <div>
-                <strong>{post.user.name}</strong>
+                <strong>{post.user?.name || "Anonymous"}</strong>
                 <p className="date">🕒 {post.date}</p>
               </div>
             </div>
@@ -1744,9 +1744,7 @@ function Announcements({ currentUser }) {
 
               {post.comments.map((c, i) => (
                 <div key={i} className="comment">
-                  {c.user?.avatar && (
-                    <img src={c.user.avatar} alt={c.user.name || "commenter"} />
-                  )}
+                  <img src={c.user?.avatar || '/default-avatar.png'} alt={c.user?.name || 'commenter'} />
                   <div>
                     <strong>{c.user?.name || "Anonymous"}</strong>
                     <p>{c.text}</p>
@@ -1754,6 +1752,7 @@ function Announcements({ currentUser }) {
                   </div>
                 </div>
               ))}
+
 
             </div>
           </div>
