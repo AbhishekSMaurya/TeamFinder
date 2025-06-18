@@ -681,46 +681,46 @@ function Teams({ currentUser }) {
         <h1>Our Teams</h1>
         <button className="create-btn" onClick={() => setShowForm(true)}>Create Your Team</button>
       </div>
-    <ul className="group-items">
-  {Array.isArray(teams) && teams.map((team, index) => (
-    <li key={team.id} className="card">
-      <strong>{team.name}</strong>
-      <button className="action-btn" onClick={() => handleJoinTeam(team.id)}>
-        Join
-      </button>
+      <ul className="group-items">
+        {Array.isArray(teams) && teams.map((team, index) => (
+          <li key={team.id} className="card">
+            <strong>{team.name}</strong>
+            <button className="action-btn" onClick={() => handleJoinTeam(team.id)}>
+              Join
+            </button>
 
-      <button className="action-btn" onClick={() => toggleMembers(index)}>
-        {showMembers[index] ? "Hide Members" : "Show Members"}
-      </button>
+            <button className="action-btn" onClick={() => toggleMembers(index)}>
+              {showMembers[index] ? "Hide Members" : "Show Members"}
+            </button>
 
-      {showMembers[index] && (
-        <ul className="details-list">
-          {Array.isArray(team.members) && team.members.map((member) => (
-            <li key={member.id} className="details-item">
-              <img
-                src={member.image}
-                alt={member.name}
-                className="avatar"
-              />
-              <div className="content">
-                <strong>{member.name}</strong>
-                <p>{member.role}</p>
-                <a href={`mailto:${member.email}`}>{member.email}</a>
-                <div className="links">
-                  {member.socials && Object.entries(member.socials).map(([platform, link]) => (
-                    <a key={platform} href={link} target="_blank" rel="noopener noreferrer">
-                      {platform}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  ))}
-</ul>
+            {showMembers[index] && (
+              <ul className="details-list">
+                {Array.isArray(team.members) && team.members.map((member) => (
+                  <li key={member.id} className="details-item">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="avatar"
+                    />
+                    <div className="content">
+                      <strong>{member.name}</strong>
+                      <p>{member.role}</p>
+                      <a href={`mailto:${member.email}`}>{member.email}</a>
+                      <div className="links">
+                        {member.socials && Object.entries(member.socials).map(([platform, link]) => (
+                          <a key={platform} href={link} target="_blank" rel="noopener noreferrer">
+                            {platform}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
 
 
       {showForm && (
@@ -1205,18 +1205,18 @@ function Explore() {
   const [commentInputs, setCommentInputs] = useState({});
 
   useEffect(() => {
-  fetch("https://teamfinder-53lz.onrender.com/api/explore")
-    .then(res => res.json())
-    .then(data => {
-      setContent(data);
-      const initialLikes = {};
-      data.forEach(post => {
-        initialLikes[post.id] = false; // all unliked initially
-      });
-      setLikeStates(initialLikes);
-    })
-    .catch(err => console.error("Failed to load explore data:", err));
-}, []);
+    fetch("https://teamfinder-53lz.onrender.com/api/explore")
+      .then(res => res.json())
+      .then(data => {
+        setContent(data);
+        const initialLikes = {};
+        data.forEach(post => {
+          initialLikes[post.id] = false; // all unliked initially
+        });
+        setLikeStates(initialLikes);
+      })
+      .catch(err => console.error("Failed to load explore data:", err));
+  }, []);
 
 
   const updatePost = (updatedItem) => {
@@ -1231,30 +1231,30 @@ function Explore() {
   };
 
   const handleLike = async (postId) => {
-  const liked = likeStates[postId]; // get current like state
+    const liked = likeStates[postId]; // get current like state
 
-  const updated = content.map(item =>
-    item.id === postId
-      ? { ...item, likes: item.likes + (liked ? -1 : 1) }
-      : item
-  );
+    const updated = content.map(item =>
+      item.id === postId
+        ? { ...item, likes: item.likes + (liked ? -1 : 1) }
+        : item
+    );
 
-  setContent(updated);
+    setContent(updated);
 
-  // Toggle the like state locally
-  setLikeStates(prev => ({ ...prev, [postId]: !liked }));
+    // Toggle the like state locally
+    setLikeStates(prev => ({ ...prev, [postId]: !liked }));
 
-  try {
-    const post = updated.find(p => p.id === postId);
-    await fetch(`https://teamfinder-53lz.onrender.com/api/explore/${postId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post)
-    });
-  } catch (err) {
-    console.error("Failed to update like:", err);
-  }
-};
+    try {
+      const post = updated.find(p => p.id === postId);
+      await fetch(`https://teamfinder-53lz.onrender.com/api/explore/${postId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post)
+      });
+    } catch (err) {
+      console.error("Failed to update like:", err);
+    }
+  };
 
   const handleCommentChange = (id, value) => {
     setCommentInputs(prev => ({ ...prev, [id]: value }));
@@ -1744,14 +1744,17 @@ function Announcements({ currentUser }) {
 
               {post.comments.map((c, i) => (
                 <div key={i} className="comment">
-                  <img src={c.user.avatar} alt="commenter" />
+                  {c.user?.avatar && (
+                    <img src={c.user.avatar} alt={c.user.name || "commenter"} />
+                  )}
                   <div>
-                    <strong>{c.user.name}</strong>
+                    <strong>{c.user?.name || "Anonymous"}</strong>
                     <p>{c.text}</p>
                     <span className="comment-time">{c.time}</span>
                   </div>
                 </div>
               ))}
+
             </div>
           </div>
         ))}
