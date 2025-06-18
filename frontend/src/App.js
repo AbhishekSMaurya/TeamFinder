@@ -1482,7 +1482,7 @@ function Projects() {
 
                 {(project.file.toLowerCase().endsWith(".zip") ||
                   project.file.toLowerCase().endsWith(".rar")) && (
-                    <a href={`http://localhost:5000${project.file}`} download>📦 Download ZIP</a>
+                    <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} download>📦 Download ZIP</a>
                   )}
               </>
             )}
