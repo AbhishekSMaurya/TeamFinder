@@ -1572,196 +1572,212 @@ function Announcements({ currentUser }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newPost = {
+      id: Date.now(),
+      title: form.title,
+      description: form.description,
+      tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+      link: form.link,
       user: {
         id: currentUser.id,
         name: currentUser.name,
         avatar: currentUser.avatar || '/default-avatar.png'
-  },
-};
+      },
+      date: new Date().toLocaleString(),
+      likes: [],
+      comments: [...(post.comments || []), {
+        user: {
+          id: currentUser.id,
+          name: currentUser.name,
+          avatar: currentUser.avatar || '/default-avatar.png'
+        },
+        text,
+        time: new Date().toLocaleTimeString()
+      }]
 
+    };
 
-fetch('https://teamfinder-53lz.onrender.com/api/announcements', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(newPost)
-})
-  .then(res => res.json())
-  .then(() => {
-    setAnnouncements(prev => [newPost, ...prev]);
-    setForm({ title: '', description: '', tags: '', link: '' });
-  })
-  .catch(err => console.error('Failed to post announcement:', err));
+    fetch('https://teamfinder-53lz.onrender.com/api/announcements', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPost)
+    })
+      .then(res => res.json())
+      .then(() => {
+        setAnnouncements(prev => [newPost, ...prev]);
+        setForm({ title: '', description: '', tags: '', link: '' });
+      })
+      .catch(err => console.error('Failed to post announcement:', err));
   };
 
-const toggleLike = (postId) => {
-  const updated = announcements.map(post => {
-    if (post.id === postId) {
-      const hasLiked = (post.likes || []).includes(currentUser?.id);
-      return {
-        ...post,
-        likes: hasLiked
-          ? post.likes.filter(id => id !== currentUser?.id)
-          : [...post.likes, currentUser?.id]
-      };
-    }
-    return post;
-  });
+  const toggleLike = (postId) => {
+    const updated = announcements.map(post => {
+      if (post.id === postId) {
+        const hasLiked = (post.likes || []).includes(currentUser?.id);
+        return {
+          ...post,
+          likes: hasLiked
+            ? post.likes.filter(id => id !== currentUser?.id)
+            : [...post.likes, currentUser?.id]
+        };
+      }
+      return post;
+    });
 
-  setAnnouncements(updated);
+    setAnnouncements(updated);
 
-  const likedPost = updated.find(p => p.id === postId);
-  fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(likedPost)
-  });
-};
+    const likedPost = updated.find(p => p.id === postId);
+    fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(likedPost)
+    });
+  };
 
-const addComment = (postId) => {
-  const text = commentInput[postId]?.trim();
-  if (!text) return;
+  const addComment = (postId) => {
+    const text = commentInput[postId]?.trim();
+    if (!text) return;
 
-  const updated = announcements.map(post => {
-    if (post.id === postId) {
-      return {
-        ...post,
-        comments: [...(post.comments || []), {
-          user: currentUser,
-          text,
-          time: new Date().toLocaleTimeString()
-        }]
-      };
-    }
-    return post;
-  });
+    const updated = announcements.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          comments: [...(post.comments || []), {
+            user: currentUser,
+            text,
+            time: new Date().toLocaleTimeString()
+          }]
+        };
+      }
+      return post;
+    });
 
-  setAnnouncements(updated);
+    setAnnouncements(updated);
 
-  const commentedPost = updated.find(p => p.id === postId);
-  fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(commentedPost)
-  });
-};
+    const commentedPost = updated.find(p => p.id === postId);
+    fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(commentedPost)
+    });
+  };
 
-const filtered = announcements.filter(a =>
-  a.title?.toLowerCase().includes(search.toLowerCase()) ||
-  (a.tags || []).join(',').toLowerCase().includes(search.toLowerCase())
-);
+  const filtered = announcements.filter(a =>
+    a.title?.toLowerCase().includes(search.toLowerCase()) ||
+    (a.tags || []).join(',').toLowerCase().includes(search.toLowerCase())
+  );
 
-return (
-  <div className="announcements-container">
-    <h2>📢 Announcements</h2>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-      <input
-        className="search-input"
-        type="text"
-        placeholder="Search by title or tag..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button
-        onClick={() => setShowForm(!showForm)}
-        className="toggle-form-button"
-      >
-        Wanna announce something?
-      </button>
-    </div>
-
-    {showForm && (
-      <form className="announcement-form" onSubmit={handleSubmit}>
+  return (
+    <div className="announcements-container">
+      <h2>📢 Announcements</h2>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
         <input
+          className="search-input"
           type="text"
-          name="title"
-          placeholder="Title"
-          value={form.title}
-          onChange={handleChange}
-          required
+          placeholder="Search by title or tag..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <textarea
-          name="description"
-          placeholder="Description"
-          rows={3}
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="tags"
-          placeholder="Tags (e.g. #react, #remote)"
-          value={form.tags}
-          onChange={handleChange}
-        />
-        <input
-          type="url"
-          name="link"
-          placeholder="Optional Link"
-          value={form.link}
-          onChange={handleChange}
-        />
-        <button type="submit">Post</button>
-      </form>
-    )}
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="toggle-form-button"
+        >
+          Wanna announce something?
+        </button>
+      </div>
 
-    <div className="announcement-feed">
-      {filtered.map((post) => (
-        <div key={post.id} className="announcement-card">
-          <div className="user-info">
-            <img src={post.user?.avatar || '/default-avatar.png'} alt="avatar" />
-            <div>
-              <strong>{post.user?.name || "Anonymous"}</strong>
-              <p className="date">🕒 {post.date}</p>
+      {showForm && (
+        <form className="announcement-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={form.title}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            rows={3}
+            value={form.description}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="tags"
+            placeholder="Tags (e.g. #react, #remote)"
+            value={form.tags}
+            onChange={handleChange}
+          />
+          <input
+            type="url"
+            name="link"
+            placeholder="Optional Link"
+            value={form.link}
+            onChange={handleChange}
+          />
+          <button type="submit">Post</button>
+        </form>
+      )}
+
+      <div className="announcement-feed">
+        {filtered.map((post) => (
+          <div key={post.id} className="announcement-card">
+            <div className="user-info">
+              <img src={post.user?.avatar || '/default-avatar.png'} alt="avatar" />
+              <div>
+                <strong>{post.user?.name || "Anonymous"}</strong>
+                <p className="date">🕒 {post.date}</p>
+              </div>
+            </div>
+
+            <h3>{post.title}</h3>
+            <p className="desc">{post.description}</p>
+
+            <div className="tags">
+              {(post.tags || []).map((tag, i) => (
+                <span key={i} className="tag">#{tag}</span>
+              ))}
+            </div>
+
+            {post.link && (
+              <a href={post.link} target="_blank" rel="noreferrer" className="post-link">
+                🔗 Learn More
+              </a>
+            )}
+
+            <div className="actions">
+              <button onClick={() => toggleLike(post.id)}>
+                {(post.likes || []).includes(currentUser?.id) ? '❤️' : '🤍'} Like ({(post.likes || []).length})
+              </button>
+            </div>
+
+            <div className="comments">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                value={commentInput[post.id] || ''}
+                onChange={(e) => setCommentInput({ ...commentInput, [post.id]: e.target.value })}
+              />
+              <button onClick={() => addComment(post.id)}>Comment</button>
+
+              {(post.comments || []).map((c, i) => (
+                <div key={i} className="comment">
+                  <img src={c.user?.avatar || '/default-avatar.png'} alt={c.user?.name || 'User'} />
+                  <div>
+                    <strong>{c.user?.name || "Anonymous"}</strong>
+                    <p>{c.text}</p>
+                    <span className="comment-time">{c.time}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-
-          <h3>{post.title}</h3>
-          <p className="desc">{post.description}</p>
-
-          <div className="tags">
-            {(post.tags || []).map((tag, i) => (
-              <span key={i} className="tag">#{tag}</span>
-            ))}
-          </div>
-
-          {post.link && (
-            <a href={post.link} target="_blank" rel="noreferrer" className="post-link">
-              🔗 Learn More
-            </a>
-          )}
-
-          <div className="actions">
-            <button onClick={() => toggleLike(post.id)}>
-              {(post.likes || []).includes(currentUser?.id) ? '❤️' : '🤍'} Like ({(post.likes || []).length})
-            </button>
-          </div>
-
-          <div className="comments">
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              value={commentInput[post.id] || ''}
-              onChange={(e) => setCommentInput({ ...commentInput, [post.id]: e.target.value })}
-            />
-            <button onClick={() => addComment(post.id)}>Comment</button>
-
-            {(post.comments || []).map((c, i) => (
-              <div key={i} className="comment">
-                <img src={c.user?.avatar || '/default-avatar.png'} alt={c.user?.name || 'User'} />
-                <div>
-                  <strong>{c.user?.name || "Anonymous"}</strong>
-                  <p>{c.text}</p>
-                  <span className="comment-time">{c.time}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 function Login({ onLogin }) {
