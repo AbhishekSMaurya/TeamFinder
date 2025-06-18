@@ -6,14 +6,11 @@ import "./App.css";
 import "./About.css";
 // import { submitbutton } from "./script";
 import "./Support.css";
-// import teamData from "./teams.json";
-// import teammatesData from "./teammates.json";
 import "./Front.css";
 import "./Responsive.css";
 import "./Login.css";
 import "./Messages.css"
 import "./Friends.css"
-// import Data from "./messagesData.json";
 import "./Posts.css";
 import "./Explore.css";
 import "./Projects.css";
@@ -209,7 +206,7 @@ function Home() {
     const newTeammate = {
       name: formData.name,
       email: formData.email,
-      skills: formData.skills,
+      skills: formData.skills.split(',').map(skill => skill.trim()),
       availability: formData.availability,
       preferences: formData.preferences,
       password: formData.password,
@@ -1481,7 +1478,7 @@ function Projects() {
 
                 {(project.file.toLowerCase().endsWith(".zip") ||
                   project.file.toLowerCase().endsWith(".rar")) && (
-                    <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} download>📦 Download ZIP</a>
+                    <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} download target="_blank">📦 Download ZIP</a>
                   )}
               </>
             )}
@@ -1710,7 +1707,7 @@ function Announcements({ currentUser }) {
         {filtered.map((post) => (
           <div key={post.id} className="announcement-card">
             <div className="user-info">
-              <img src={post.user.avatar} alt="avatar" />
+              <img src={post.user?.avatar || '/default-avatar.png'} alt="avatar" />
               <div>
                 <strong>{post.user.name}</strong>
                 <p className="date">🕒 {post.date}</p>
