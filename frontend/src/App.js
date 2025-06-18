@@ -1534,35 +1534,40 @@ function Projects() {
 
 
 function Announcements({ currentUser }) {
-
   const [announcements, setAnnouncements] = useState([]);
   const [form, setForm] = useState({ title: '', description: '', tags: '', link: '' });
   const [search, setSearch] = useState('');
-  const [commentInput, setCommentInput] = useState({}); // Track comments per post
+  const [commentInput, setCommentInput] = useState({});
   const [showForm, setShowForm] = useState(false);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
+
   useEffect(() => {
     fetch('https://teamfinder-53lz.onrender.com/api/announcements')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setAnnouncements(data);
+          // Ensure tags are always arrays
+          const normalized = data.map(post => ({
+            ...post,
+            tags: Array.isArray(post.tags) ? post.tags : [],
+            likes: Array.isArray(post.likes) ? post.likes : [],
+            comments: Array.isArray(post.comments) ? post.comments : []
+          }));
+          setAnnouncements(normalized);
         } else {
-          console.error('Unexpected data format for announcements:', data);
-          setAnnouncements([]); // fallback to empty array
+          console.error('Unexpected data format:', data);
+          setAnnouncements([]);
         }
       })
       .catch(err => {
-        console.error('Failed to fetch announcements', err);
-        setAnnouncements([]); // ensure fallback on failure
+        console.error('Failed to fetch announcements:', err);
+        setAnnouncements([]);
       });
   }, []);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1570,13 +1575,14 @@ function Announcements({ currentUser }) {
       id: Date.now(),
       title: form.title,
       description: form.description,
-      tags: form.tags.split(',').map(tag => tag.trim()),
+      tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
       link: form.link,
       user: currentUser,
       date: new Date().toLocaleString(),
       likes: [],
       comments: []
     };
+
     fetch('https://teamfinder-53lz.onrender.com/api/announcements', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1593,16 +1599,17 @@ function Announcements({ currentUser }) {
   const toggleLike = (postId) => {
     const updated = announcements.map(post => {
       if (post.id === postId) {
-        const hasLiked = post.likes.includes(currentUser.id);
+        const hasLiked = (post.likes || []).includes(currentUser?.id);
         return {
           ...post,
           likes: hasLiked
-            ? post.likes.filter(id => id !== currentUser.id)
-            : [...post.likes, currentUser.id]
+            ? post.likes.filter(id => id !== currentUser?.id)
+            : [...post.likes, currentUser?.id]
         };
       }
       return post;
     });
+
     setAnnouncements(updated);
 
     const likedPost = updated.find(p => p.id === postId);
@@ -1611,7 +1618,6 @@ function Announcements({ currentUser }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(likedPost)
     });
-
   };
 
   const addComment = (postId) => {
@@ -1622,7 +1628,7 @@ function Announcements({ currentUser }) {
       if (post.id === postId) {
         return {
           ...post,
-          comments: [...post.comments, {
+          comments: [...(post.comments || []), {
             user: currentUser,
             text,
             time: new Date().toLocaleTimeString()
@@ -1633,18 +1639,18 @@ function Announcements({ currentUser }) {
     });
 
     setAnnouncements(updated);
+
     const commentedPost = updated.find(p => p.id === postId);
     fetch(`https://teamfinder-53lz.onrender.com/api/announcements/${postId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(commentedPost)
     });
-
   };
 
   const filtered = announcements.filter(a =>
-    a.title.toLowerCase().includes(search.toLowerCase()) ||
-    a.tags.join(',').toLowerCase().includes(search.toLowerCase())
+    a.title?.toLowerCase().includes(search.toLowerCase()) ||
+    (a.tags || []).join(',').toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -1667,7 +1673,6 @@ function Announcements({ currentUser }) {
       </div>
 
       {showForm && (
-
         <form className="announcement-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -1700,9 +1705,9 @@ function Announcements({ currentUser }) {
             onChange={handleChange}
           />
           <button type="submit">Post</button>
-
         </form>
       )}
+
       <div className="announcement-feed">
         {filtered.map((post) => (
           <div key={post.id} className="announcement-card">
@@ -1716,11 +1721,13 @@ function Announcements({ currentUser }) {
 
             <h3>{post.title}</h3>
             <p className="desc">{post.description}</p>
+
             <div className="tags">
-              {post.tags.map((tag, i) => (
+              {(post.tags || []).map((tag, i) => (
                 <span key={i} className="tag">#{tag}</span>
               ))}
             </div>
+
             {post.link && (
               <a href={post.link} target="_blank" rel="noreferrer" className="post-link">
                 🔗 Learn More
@@ -1729,7 +1736,7 @@ function Announcements({ currentUser }) {
 
             <div className="actions">
               <button onClick={() => toggleLike(post.id)}>
-                {post.likes.includes(currentUser.id) ? '❤️' : '🤍'} Like ({post.likes.length})
+                {(post.likes || []).includes(currentUser?.id) ? '❤️' : '🤍'} Like ({(post.likes || []).length})
               </button>
             </div>
 
@@ -1742,9 +1749,9 @@ function Announcements({ currentUser }) {
               />
               <button onClick={() => addComment(post.id)}>Comment</button>
 
-              {post.comments.map((c, i) => (
+              {(post.comments || []).map((c, i) => (
                 <div key={i} className="comment">
-                  <img src={c.user?.avatar || '/default-avatar.png'} alt={c.user?.name || 'commenter'} />
+                  <img src={c.user?.avatar || '/default-avatar.png'} alt={c.user?.name || 'User'} />
                   <div>
                     <strong>{c.user?.name || "Anonymous"}</strong>
                     <p>{c.text}</p>
@@ -1752,8 +1759,6 @@ function Announcements({ currentUser }) {
                   </div>
                 </div>
               ))}
-
-
             </div>
           </div>
         ))}
@@ -1761,6 +1766,7 @@ function Announcements({ currentUser }) {
     </div>
   );
 }
+
 function Login({ onLogin }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
