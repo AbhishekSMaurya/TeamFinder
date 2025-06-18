@@ -1474,7 +1474,7 @@ function Projects() {
             {project.file && (
               <>
                 {project.file.toLowerCase().endsWith(".pdf") && (
-                  <a href={`http://localhost:5000${project.file}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} target="_blank" rel="noopener noreferrer">
                     📄 View PDF
                   </a>
 
