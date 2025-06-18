@@ -12,7 +12,6 @@ import "./Front.css";
 import "./Responsive.css";
 import "./Login.css";
 import "./Messages.css"
-import data from "./Friends.json";
 import "./Friends.css"
 // import Data from "./messagesData.json";
 import "./Posts.css";
