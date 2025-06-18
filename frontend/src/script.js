@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const query = document.getElementById("searchInput")?.value.toLowerCase();
         const teamList = document.getElementById("team-list");
 
-        fetch("/get_teammates")
+        fetch("https://teamfinder-53lz.onrender.com//get_teammates")
             .then((response) => response.json())
             .then((data) => {
                 const filteredTeams = data.filter((teammate) =>
