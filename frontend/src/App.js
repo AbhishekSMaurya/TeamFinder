@@ -1531,10 +1531,6 @@ function Projects() {
   );
 }
 
-
-
-import React, { useEffect, useState } from "react";
-
 function Announcements({ currentUser }) {
   const [announcements, setAnnouncements] = useState([]);
   const [form, setForm] = useState({
@@ -1577,38 +1573,39 @@ function Announcements({ currentUser }) {
 
   // Submit new announcement
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const newPost = {
-      title: form.title,
-      description: form.description,
-      tags: form.tags
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean),
-      link: form.link,
-      user: {
-        id: currentUser.id,
-        name: currentUser.name,
-        avatar: currentUser.avatar || "/default-avatar.png",
-      },
-      date: new Date().toLocaleString(),
-    };
-
-    fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPost),
-    })
-      .then((res) => res.json())
-      .then((savedPost) => {
-        setAnnouncements((prev) => [savedPost, ...prev]);
-        setForm({ title: "", description: "", tags: "", link: "" });
-      })
-      .catch((err) =>
-        console.error("Failed to post new announcement:", err)
-      );
+  const newPost = {
+    title: form.title,
+    description: form.description,
+    tags: form.tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean),
+    link: form.link,
+    user: {
+      id: currentUser.id,
+      name: currentUser.name,
+      avatar: currentUser.avatar || "/default-avatar.png",
+    },
+    date: new Date().toLocaleString(),
+    likes: [],
+    comments: [],
   };
+
+  fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newPost),
+  })
+    .then((res) => res.json())
+    .then((savedPost) => {
+      setAnnouncements((prev) => [savedPost, ...prev]);
+      setForm({ title: "", description: "", tags: "", link: "" });
+    })
+    .catch((err) => console.error("Failed to post announcement:", err));
+};
+
 
   // Like toggle
   const toggleLike = (postId) => {
