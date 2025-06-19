@@ -38,12 +38,21 @@ db.serialize(() => {
     content TEXT
     )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS announcements (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    db.run(`
+  CREATE TABLE IF NOT EXISTS announcements (
+    id INTEGER PRIMARY KEY,
     title TEXT,
-    content TEXT,
-    date TEXT
-    )`);
+    description TEXT,
+    tags TEXT,
+    link TEXT,
+    userId TEXT,
+    userName TEXT,
+    userAvatar TEXT,
+    date TEXT,
+    likes TEXT,
+    comments TEXT
+  )
+`);
 
     db.run(`CREATE TABLE IF NOT EXISTS projects (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
