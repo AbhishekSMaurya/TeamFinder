@@ -1576,22 +1576,20 @@ function Announcements({ currentUser }) {
   e.preventDefault();
 
   const newPost = {
-    title: form.title,
-    description: form.description,
-    tags: form.tags
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter(Boolean),
-    link: form.link,
-    user: {
-      id: currentUser.id,
-      name: currentUser.name,
-      avatar: currentUser.avatar || "/default-avatar.png",
-    },
-    date: new Date().toLocaleString(),
-    likes: [],
-    comments: [],
-  };
+  title: form.title,
+  description: form.description,
+  tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+  link: form.link,
+  user: {
+    id: currentUser.id,
+    name: currentUser.name,
+    avatar: currentUser.avatar || '/default-avatar.png'
+  },
+  date: new Date().toLocaleString(),
+  likes: [],
+  comments: []
+};
+
 
   fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
     method: "POST",
