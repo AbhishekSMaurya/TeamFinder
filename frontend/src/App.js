@@ -1533,23 +1533,16 @@ function Projects() {
 
 function Announcements({ currentUser }) {
   const [announcements, setAnnouncements] = useState([]);
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    tags: "",
-    link: "",
-  });
+  const [form, setForm] = useState({ title: "", description: "", tags: "", link: "" });
   const [search, setSearch] = useState("");
   const [commentInput, setCommentInput] = useState({});
   const [showForm, setShowForm] = useState(false);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Fetch announcements
   useEffect(() => {
     fetch("https://teamfinder-53lz.onrender.com/api/announcements")
       .then((res) => res.json())
@@ -1561,17 +1554,14 @@ function Announcements({ currentUser }) {
             likes: Array.isArray(post.likes) ? post.likes : [],
             comments: Array.isArray(post.comments) ? post.comments : [],
           }));
-          setAnnouncements(normalized.reverse()); // Latest on top
+          setAnnouncements(normalized.reverse());
         } else {
           console.error("Invalid data format:", data);
         }
       })
-      .catch((err) => {
-        console.error("Error fetching announcements:", err);
-      });
+      .catch((err) => console.error("Error fetching announcements:", err));
   }, []);
 
-  // Submit new announcement
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -1583,11 +1573,11 @@ function Announcements({ currentUser }) {
       user: {
         id: currentUser.id,
         name: currentUser.name,
-        avatar: currentUser.avatar || '/default-avatar.png'
+        avatar: currentUser.avatar || "/default-avatar.png",
       },
       date: new Date().toLocaleString(),
       likes: [],
-      comments: []
+      comments: [],
     };
 
     fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
@@ -1595,25 +1585,23 @@ function Announcements({ currentUser }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newPost),
     })
-      .then(res => res.json()) // ✅ Fix: parse response to JSON
-      .then((savedPost) => {
-        setAnnouncements((prev) => [savedPost, ...prev]);
-        setForm({ title: '', description: '', tags: '', link: '' });
+      .then((res) => res.json())
+      .then((data) => {
+        setAnnouncements((prev) => [newPost, ...prev]);
+        setForm({ title: "", description: "", tags: "", link: "" });
       })
       .catch((err) => console.error("Failed to post announcement:", err));
   };
 
-
-  // Like toggle
   const toggleLike = (postId) => {
     const updated = announcements.map((post) => {
       if (post.id === postId) {
-        const liked = post.likes.includes(currentUser.id);
+        const liked = (post.likes || []).includes(currentUser.id);
         return {
           ...post,
           likes: liked
             ? post.likes.filter((id) => id !== currentUser.id)
-            : [...post.likes, currentUser.id],
+            : [...(post.likes || []), currentUser.id],
         };
       }
       return post;
@@ -1629,7 +1617,6 @@ function Announcements({ currentUser }) {
     });
   };
 
-  // Add comment
   const addComment = (postId) => {
     const text = commentInput[postId]?.trim();
     if (!text) return;
@@ -1639,7 +1626,7 @@ function Announcements({ currentUser }) {
         return {
           ...post,
           comments: [
-            ...post.comments,
+            ...(post.comments || []),
             {
               user: {
                 id: currentUser.id,
@@ -1666,17 +1653,15 @@ function Announcements({ currentUser }) {
     });
   };
 
-  // Filter announcements
-  const filtered = announcements.filter(a =>
-    (a.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
-    (Array.isArray(a.tags) ? a.tags.join(',').toLowerCase() : '').includes(search.toLowerCase())
+  const filtered = announcements.filter((a) =>
+    (a.title?.toLowerCase() || "").includes(search.toLowerCase()) ||
+    (Array.isArray(a.tags) ? a.tags.join(",").toLowerCase() : "").includes(search.toLowerCase())
   );
 
   return (
     <div className="announcements-container">
       <h2>📢 Announcements</h2>
 
-      {/* Search + Toggle */}
       <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
         <input
           className="search-input"
@@ -1690,7 +1675,6 @@ function Announcements({ currentUser }) {
         </button>
       </div>
 
-      {/* New Post Form */}
       {showForm && (
         <form className="announcement-form" onSubmit={handleSubmit}>
           <input
@@ -1727,15 +1711,11 @@ function Announcements({ currentUser }) {
         </form>
       )}
 
-      {/* Announcements Feed */}
       <div className="announcement-feed">
         {filtered.map((post) => (
           <div key={post.id} className="announcement-card">
             <div className="user-info">
-              <img
-                src={post.user?.avatar || "/default-avatar.png"}
-                alt="avatar"
-              />
+              <img src={post.user?.avatar || "/default-avatar.png"} alt="avatar" />
               <div>
                 <strong>{post.user?.name || "Anonymous"}</strong>
                 <p className="date">🕒 {post.date}</p>
@@ -1746,11 +1726,9 @@ function Announcements({ currentUser }) {
             <p className="desc">{post.description}</p>
 
             <div className="tags">
-              {Array.isArray(post.tags) &&
-                post.tags.map((tag, i) => (
-                  <span key={i} className="tag">#{tag}</span>
-                ))
-              }
+              {(post.tags || []).map((tag, i) => (
+                <span key={i} className="tag">#{tag}</span>
+              ))}
             </div>
 
             {post.link && (
@@ -1766,7 +1744,7 @@ function Announcements({ currentUser }) {
 
             <div className="actions">
               <button onClick={() => toggleLike(post.id)}>
-                {post.likes.includes(currentUser.id) ? "❤️" : "🤍"} Like ({post.likes.length})
+                {(post.likes || []).includes(currentUser.id) ? "❤️" : "🤍"} Like ({(post.likes || []).length})
               </button>
             </div>
 
@@ -1781,21 +1759,19 @@ function Announcements({ currentUser }) {
               />
               <button onClick={() => addComment(post.id)}>Comment</button>
 
-              {Array.isArray(post.comments) &&
-                post.comments.map((c, i) => (
-                  <div key={i} className="comment">
-                    <img
-                      src={c.user?.avatar || "/default-avatar.png"}
-                      alt={c.user?.name || "User"}
-                    />
-                    <div>
-                      <strong>{c.user?.name || "Anonymous"}</strong>
-                      <p>{c.text}</p>
-                      <span className="comment-time">{c.time}</span>
-                    </div>
+              {(post.comments || []).map((c, i) => (
+                <div key={i} className="comment">
+                  <img
+                    src={c.user?.avatar || "/default-avatar.png"}
+                    alt={c.user?.name || "User"}
+                  />
+                  <div>
+                    <strong>{c.user?.name || "Anonymous"}</strong>
+                    <p>{c.text}</p>
+                    <span className="comment-time">{c.time}</span>
                   </div>
-                ))}
-
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -1803,6 +1779,7 @@ function Announcements({ currentUser }) {
     </div>
   );
 }
+
 
 function Login({ onLogin }) {
   const [currentUser, setCurrentUser] = useState(null);
