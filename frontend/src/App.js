@@ -1573,36 +1573,44 @@ function Announcements({ currentUser }) {
 
   // Submit new announcement
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const newPost = {
-  title: form.title,
-  description: form.description,
-  tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-  link: form.link,
-  user: {
-    id: currentUser.id,
-    name: currentUser.name,
-    avatar: currentUser.avatar || '/default-avatar.png'
-  },
-  date: new Date().toLocaleString(),
-  likes: [],
-  comments: []
-};
+    const newPost = {
+      title: form.title,
+      description: form.description,
+      tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+      link: form.link,
+      user: {
+        id: currentUser.id,
+        name: currentUser.name,
+        avatar: currentUser.avatar || '/default-avatar.png'
+      },
+      date: new Date().toLocaleString(),
+      likes: [],
+      comments: []
+    };
 
 
-  fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newPost),
-  })
-    .then((res) => res.json())
-    .then((savedPost) => {
-      setAnnouncements((prev) => [savedPost, ...prev]);
-      setForm({ title: "", description: "", tags: "", link: "" });
+    fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPost),
     })
-    .catch((err) => console.error("Failed to post announcement:", err));
-};
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const normalized = data.map((post) => ({
+            ...post,
+            tags: Array.isArray(post.tags) ? post.tags : [],
+            likes: Array.isArray(post.likes) ? post.likes : [],
+            comments: Array.isArray(post.comments) ? post.comments : [],
+          }));
+          setAnnouncements(normalized.reverse());
+        } else {
+          console.error("Invalid data format:", data);
+        }
+      })
+      .catch((err) => console.error("Failed to post announcement:", err));
+  };
 
 
   // Like toggle
@@ -1669,9 +1677,9 @@ function Announcements({ currentUser }) {
 
   // Filter announcements
   const filtered = announcements.filter(a =>
-  (a.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
-  (Array.isArray(a.tags) ? a.tags.join(',').toLowerCase() : '').includes(search.toLowerCase())
-);
+    (a.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
+    (Array.isArray(a.tags) ? a.tags.join(',').toLowerCase() : '').includes(search.toLowerCase())
+  );
 
   return (
     <div className="announcements-container">
@@ -1747,9 +1755,11 @@ function Announcements({ currentUser }) {
             <p className="desc">{post.description}</p>
 
             <div className="tags">
-              {post.tags.map((tag, i) => (
-                <span key={i} className="tag">#{tag}</span>
-              ))}
+              {Array.isArray(post.tags) &&
+                post.tags.map((tag, i) => (
+                  <span key={i} className="tag">#{tag}</span>
+                ))
+              }
             </div>
 
             {post.link && (
