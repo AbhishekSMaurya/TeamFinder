@@ -317,12 +317,7 @@ app.get("/api/health", (req, res) => {
 
 
 // ✅ Serve static frontend
-app.use(express.static(path.join(__dirname, "build")));
 
-// ✅ Catch-all route for React frontend
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 // ✅ Start server
 app.listen(PORT, () => {
