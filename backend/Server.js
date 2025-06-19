@@ -227,29 +227,85 @@ app.post("/api/projects", projectUpload.fields([{ name: "image" }, { name: "file
 app.get("/api/announcements", (req, res) => {
   db.all("SELECT * FROM announcements", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
+
+    const parsed = rows.map(row => ({
+      ...row,
+      tags: row.tags ? JSON.parse(row.tags) : [],
+      likes: row.likes ? JSON.parse(row.likes) : [],
+      comments: row.comments ? JSON.parse(row.comments) : [],
+      user: {
+        name: row.user_name || "Anonymous",
+        avatar: row.user_avatar || "/default-avatar.png"
+      }
+    }));
+
+    res.json(parsed);
   });
 });
 
-// POST new announcement
 app.post("/api/announcements", (req, res) => {
-  const { title, content } = req.body;
-  const date = new Date().toISOString();
-  db.run(`INSERT INTO announcements (title, content, date) VALUES (?, ?, ?)`,
-    [title, content, date], function (err) {
+  const {
+    title, description, tags = [], link = "", date,
+    user = {}, likes = [], comments = []
+  } = req.body;
+
+  const stmt = `INSERT INTO announcements
+    (title, description, tags, link, date, user_name, user_avatar, likes, comments)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.run(stmt,
+    [
+      title,
+      description,
+      JSON.stringify(tags),
+      link,
+      date || new Date().toISOString(),
+      user.name || "Anonymous",
+      user.avatar || "/default-avatar.png",
+      JSON.stringify(likes),
+      JSON.stringify(comments)
+    ],
+    function (err) {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ id: this.lastID, title, content, date });
-  });
+
+      res.status(201).json({
+        id: this.lastID,
+        title, description, tags, link, date,
+        likes, comments,
+        user
+      });
+    });
 });
 
 app.put("/api/announcements/:id", (req, res) => {
-  const { title, content } = req.body;
-  const id = parseInt(req.params.id);
-  db.run(`UPDATE announcements SET title = ?, content = ? WHERE id = ?`,
-    [title, content, id], function (err) {
+  const id = req.params.id;
+  const {
+    title, description, tags = [], link = "",
+    date, user = {}, likes = [], comments = []
+  } = req.body;
+
+  const stmt = `UPDATE announcements SET
+    title = ?, description = ?, tags = ?, link = ?, date = ?,
+    user_name = ?, user_avatar = ?, likes = ?, comments = ?
+    WHERE id = ?`;
+
+  db.run(stmt,
+    [
+      title,
+      description,
+      JSON.stringify(tags),
+      link,
+      date,
+      user.name,
+      user.avatar,
+      JSON.stringify(likes),
+      JSON.stringify(comments),
+      id
+    ],
+    function (err) {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: "Announcement updated" });
-  });
+    });
 });
 
 
