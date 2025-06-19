@@ -1590,24 +1590,15 @@ function Announcements({ currentUser }) {
       comments: []
     };
 
-
     fetch("https://teamfinder-53lz.onrender.com/api/announcements", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newPost),
     })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const normalized = data.map((post) => ({
-            ...post,
-            tags: Array.isArray(post.tags) ? post.tags : [],
-            likes: Array.isArray(post.likes) ? post.likes : [],
-            comments: Array.isArray(post.comments) ? post.comments : [],
-          }));
-          setAnnouncements(normalized.reverse());
-        } else {
-          console.error("Invalid data format:", data);
-        }
+      .then(res => res.json()) // ✅ Fix: parse response to JSON
+      .then((savedPost) => {
+        setAnnouncements((prev) => [savedPost, ...prev]);
+        setForm({ title: '', description: '', tags: '', link: '' });
       })
       .catch((err) => console.error("Failed to post announcement:", err));
   };
@@ -1790,19 +1781,21 @@ function Announcements({ currentUser }) {
               />
               <button onClick={() => addComment(post.id)}>Comment</button>
 
-              {post.comments.map((c, i) => (
-                <div key={i} className="comment">
-                  <img
-                    src={c.user?.avatar || "/default-avatar.png"}
-                    alt={c.user?.name || "User"}
-                  />
-                  <div>
-                    <strong>{c.user?.name || "Anonymous"}</strong>
-                    <p>{c.text}</p>
-                    <span className="comment-time">{c.time}</span>
+              {Array.isArray(post.comments) &&
+                post.comments.map((c, i) => (
+                  <div key={i} className="comment">
+                    <img
+                      src={c.user?.avatar || "/default-avatar.png"}
+                      alt={c.user?.name || "User"}
+                    />
+                    <div>
+                      <strong>{c.user?.name || "Anonymous"}</strong>
+                      <p>{c.text}</p>
+                      <span className="comment-time">{c.time}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+
             </div>
           </div>
         ))}
