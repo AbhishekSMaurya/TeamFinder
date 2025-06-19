@@ -1668,10 +1668,10 @@ function Announcements({ currentUser }) {
   };
 
   // Filter announcements
-  const filtered = announcements.filter((a) =>
-    a.title.toLowerCase().includes(search.toLowerCase()) ||
-    a.tags.join(",").toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = announcements.filter(a =>
+  (a.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
+  (Array.isArray(a.tags) ? a.tags.join(',').toLowerCase() : '').includes(search.toLowerCase())
+);
 
   return (
     <div className="announcements-container">
