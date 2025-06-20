@@ -146,6 +146,7 @@ app.post("/api/teams", (req, res) => {
 
 
 
+
 app.get("/api/messages", (req, res) => {
   db.all("SELECT * FROM messages", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
