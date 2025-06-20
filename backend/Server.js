@@ -114,11 +114,19 @@ app.get("/api/teams", (req, res) => {
 
 
 app.post("/api/teams", (req, res) => {
-  const { name, description, skills, members = [] } = req.body;
+  const { name, description, skills, members } = req.body;
 
-  const stmt = `INSERT INTO teams (name, description, skills, members) VALUES (?, ?, ?, ?)`;
-  db.run(stmt, [name, description, skills, JSON.stringify(members)], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
+  if (!name || !description || !skills || !members) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+
+  const stmt = db.prepare(`INSERT INTO teams (name, description, skills, members) VALUES (?, ?, ?, ?)`);
+
+  stmt.run(name, description, skills, JSON.stringify(members), function (err) {
+    if (err) {
+      console.error("❌ DB insert error:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
 
     res.status(201).json({
       id: this.lastID,
@@ -128,7 +136,10 @@ app.post("/api/teams", (req, res) => {
       members
     });
   });
+
+  stmt.finalize();
 });
+
 
 
 app.get("/api/messages", (req, res) => {
