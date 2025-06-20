@@ -575,107 +575,87 @@ function Teams({ currentUser }) {
   };
 
   const handleJoinTeam = (teamId) => {
-    if (!currentUser || !currentUser.name || !currentUser.email) {
-      alert("Please log in with a valid account to join a team.");
-      return;
-    }
+  if (!currentUser || !currentUser.name || !currentUser.email) {
+    alert("Please log in with a valid account to join a team.");
+    return;
+  }
 
-    const newMember = {
-      name: currentUser.name,
-      email: currentUser.email,
-      image: currentUser.avatar || "", // match server expectations
-      role: "Member",
-      socials: {},
-    };
-
-    fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMember), // ✅ send the object directly
-      })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.error("❌ Backend error:", errorText);
-          alert(`Failed to join team: ${errorText}`);
-          return;
-        }
-        return res.json();
-      })
-      .then((updatedTeam) => {
-        if (!updatedTeam) return;
-
-        alert(`🎉 Successfully joined ${updatedTeam.name}!`);
-        // Update local team state
-        setTeams((prevTeams) =>
-          prevTeams.map((team) =>
-            team.id === updatedTeam.id ? updatedTeam : team
-          )
-        );
-      })
-      .catch((err) => {
-        console.error("❌ Join error:", err);
-        alert("Something went wrong while joining the team.");
-      });
+  const newMember = {
+    name: currentUser.name,
+    email: currentUser.email,
+    image: currentUser.avatar || "",
+    role: "Member",
+    socials: {}
   };
 
-
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Parse members and skills into arrays (optional depending on backend expectation)
-    const membersArray = newTeam.members.split(',').map(name => ({
-      name: name.trim(),
-      email: '',
-      image: '',
-      role: '',
-      socials: {}
-    }));
-
-    const formattedTeam = {
-      ...newTeam,
-      id: Date.now(), // client-side ID for UI use
-      members: membersArray,
-      skills: newTeam.skills // ✅ string as-is
-    };
-
-
-    fetch("https://teamfinder-53lz.onrender.com/api/teams", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formattedTeam)
+  fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newMember)
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to join team");
+      return res.json();
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to add team");
-        return res.json();  // ✔ change this
-      })
+    .then((updatedTeam) => {
+      alert(`✅ Joined team: ${updatedTeam.name}`);
 
-      .then(() => {
-        alert("Your team is created successfully!");
+      setTeams(prev =>
+        prev.map(team => team.id === updatedTeam.id ? updatedTeam : team)
+      );
+    })
+    .catch(err => {
+      console.error("❌ Failed to join:", err);
+      alert("Couldn't join team.");
+    });
+};
 
-        // Add new team to the UI
-        setTeams((prev) => [...prev, formattedTeam]);
 
-        // Reset form
-        setNewTeam({
-          name: "",
-          members: "",
-          description: "",
-          skills: ""
-        });
 
-        setShowForm(false);
-      })
-      .catch((err) => {
-        console.error("Error submitting team:", err);
-        alert("There was an error creating the team.");
-      });
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const membersArray = newTeam.members.split(',').map(name => ({
+    name: name.trim(),
+    email: '',
+    image: '',
+    role: '',
+    socials: {}
+  }));
+
+  const formattedTeam = {
+    name: newTeam.name,
+    description: newTeam.description,
+    skills: newTeam.skills, // Send as string
+    members: membersArray
   };
+
+  fetch("https://teamfinder-53lz.onrender.com/api/teams", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formattedTeam)
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to add team");
+      return res.json();
+    })
+    .then((createdTeam) => {
+      alert("✅ Team created successfully!");
+
+      setTeams((prev) => [...prev, createdTeam]); // Use server-sent ID
+
+      setNewTeam({ name: "", members: "", description: "", skills: "" });
+      setShowForm(false);
+    })
+    .catch((err) => {
+      console.error("❌ Error creating team:", err);
+      alert("Failed to create team.");
+    });
+};
+
 
 
   return (
