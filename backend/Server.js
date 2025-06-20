@@ -4,7 +4,7 @@ const cors = require("cors");
 const fs = require("fs");
 const axios = require('axios');
 const app = express();
-const PORT =  process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const path = require("path");
@@ -111,6 +111,7 @@ app.get("/api/teams", (req, res) => {
       members: row.members ? JSON.parse(row.members) : [],
     }));
 
+
     res.json({ teams: parsed });
   });
 });
@@ -143,8 +144,6 @@ app.post("/api/teams", (req, res) => {
 
   stmt.finalize();
 });
-
-
 
 
 app.get("/api/messages", (req, res) => {
