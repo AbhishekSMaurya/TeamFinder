@@ -588,7 +588,8 @@ function Teams({ currentUser }) {
       socials: {},
     };
 
-    fetch(`${process.env.REACT_APP_API_BASE}/api/teammates/${teamId}/join`, {
+    fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`, 
+ {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMember), // ✅ send the object directly
