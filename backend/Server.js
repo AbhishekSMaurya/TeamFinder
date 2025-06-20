@@ -101,19 +101,35 @@ app.post("/api/teams/:id/join", (req, res) => {
 app.get("/api/teams", (req, res) => {
   db.all("SELECT * FROM teams", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json({ teams: rows });
+
+    const parsed = rows.map(row => ({
+      ...row,
+      members: row.members ? JSON.parse(row.members) : [],
+    }));
+
+    res.json({ teams: parsed });
   });
 });
+
 
 
 app.post("/api/teams", (req, res) => {
-  const { name, description, skills } = req.body;
-  const stmt = `INSERT INTO teams (name, description, skills) VALUES (?, ?, ?)`;
-  db.run(stmt, [name, description, skills], function (err) {
+  const { name, description, skills, members = [] } = req.body;
+
+  const stmt = `INSERT INTO teams (name, description, skills, members) VALUES (?, ?, ?, ?)`;
+  db.run(stmt, [name, description, skills, JSON.stringify(members)], function (err) {
     if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id: this.lastID, name, description, skills });
+
+    res.status(201).json({
+      id: this.lastID,
+      name,
+      description,
+      skills,
+      members
+    });
   });
 });
+
 
 app.get("/api/messages", (req, res) => {
   db.all("SELECT * FROM messages", [], (err, rows) => {
