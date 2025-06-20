@@ -62,12 +62,40 @@ app.get("/api/feedback", (req, res) => {
 
 
 // POST /api/teams/:id/join
-app.post('/api/teams/:id/join', (req, res) => {
+app.post("/api/teams/:id/join", (req, res) => {
   const teamId = parseInt(req.params.id);
-  const { name, email } = req.body;
-  // Simulate response
-  res.json({ message: `Member ${name} with email ${email} added to team ${teamId}` });
+  const { name, email, image = "", role = "Member", socials = {} } = req.body;
+
+  // Get the existing team
+  db.get("SELECT * FROM teams WHERE id = ?", [teamId], (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ error: "Team not found" });
+
+    let members = [];
+    try {
+      members = JSON.parse(row.members || "[]");
+    } catch (parseErr) {
+      return res.status(500).json({ error: "Failed to parse team members" });
+    }
+
+    // Add the new member
+    members.push({ name, email, image, role, socials });
+
+    // Update team
+    const stmt = `UPDATE teams SET members = ? WHERE id = ?`;
+    db.run(stmt, [JSON.stringify(members), teamId], function (updateErr) {
+      if (updateErr) return res.status(500).json({ error: updateErr.message });
+
+      // Respond with the updated team
+      const updatedTeam = {
+        ...row,
+        members,
+      };
+      res.json(updatedTeam);
+    });
+  });
 });
+
 
 
 app.get("/api/teams", (req, res) => {
