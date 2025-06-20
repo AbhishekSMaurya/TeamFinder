@@ -245,11 +245,24 @@ app.get("/api/announcements", (req, res) => {
 
 app.post("/api/announcements", (req, res) => {
   const {
-    title, description, tags = [], link = "", date,
-    user = {}, likes = [], comments = []
+    title,
+    description,
+    tags = [],
+    link = "",
+    date,
+    user = {},
+    likes = [],
+    comments = []
   } = req.body;
 
-  const stmt = `INSERT INTO announcements
+  const userName = user?.name || "Anonymous";
+  const userAvatar = user?.avatar || "/default-avatar.png";
+
+  if (!title || !description) {
+    return res.status(400).json({ error: "Title and description are required" });
+  }
+
+  const stmt = `INSERT INTO announcements 
     (title, description, tags, link, date, user_name, user_avatar, likes, comments)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
@@ -260,8 +273,8 @@ app.post("/api/announcements", (req, res) => {
       JSON.stringify(tags),
       link,
       date || new Date().toISOString(),
-      user.name || "Anonymous",
-      user.avatar || "/default-avatar.png",
+      userName,
+      userAvatar,
       JSON.stringify(likes),
       JSON.stringify(comments)
     ],
@@ -270,12 +283,22 @@ app.post("/api/announcements", (req, res) => {
 
       res.status(201).json({
         id: this.lastID,
-        title, description, tags, link, date,
-        likes, comments,
-        user
+        title,
+        description,
+        tags,
+        link,
+        date,
+        likes,
+        comments,
+        user: {
+          name: userName,
+          avatar: userAvatar
+        }
       });
     });
 });
+
+
 
 app.put("/api/announcements/:id", (req, res) => {
   const id = req.params.id;
