@@ -12,7 +12,11 @@ const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
 
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://teamfinderbycodecrushers.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json()); // for parsing application/json
 
 const teammates = [];
