@@ -105,12 +105,13 @@ app.get("/api/teams", (req, res) => {
     const parsed = rows.map(row => ({
       ...row,
       members: row.members ? JSON.parse(row.members) : [],
+      // ✅ keep skills as string
     }));
-
 
     res.json({ teams: parsed });
   });
 });
+
 
 
 
@@ -121,6 +122,7 @@ app.post("/api/teams", (req, res) => {
     return res.status(400).json({ error: "Missing required fields." });
   }
 
+  // ✅ Store skills as plain string (no JSON)
   const stmt = db.prepare(`INSERT INTO teams (name, description, skills, members) VALUES (?, ?, ?, ?)`);
 
   stmt.run(name, description, skills, JSON.stringify(members), function (err) {
@@ -140,6 +142,7 @@ app.post("/api/teams", (req, res) => {
 
   stmt.finalize();
 });
+
 
 
 app.get("/api/messages", (req, res) => {
