@@ -637,9 +637,9 @@ function Teams({ currentUser }) {
 
     const formattedTeam = {
       ...newTeam,
-      id: Date.now(),
+      id: Date.now(), // client-side ID for UI use
       members: membersArray,
-      skills: newTeam.skills // now it's a plain string
+      skills: newTeam.skills // ✅ string as-is
     };
 
 
