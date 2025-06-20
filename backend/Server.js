@@ -132,12 +132,13 @@ app.post("/api/teams", (req, res) => {
     }
 
     res.status(201).json({
-      id: this.lastID,
+      id: this.lastID, // ✅ include actual DB id
       name,
       description,
       skills,
       members
     });
+
   });
 
   stmt.finalize();
