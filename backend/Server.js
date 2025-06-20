@@ -111,12 +111,7 @@ app.post("/api/messages", (req, res) => {
 // POST a new teammate
 
 // Get all posts
-app.get("/api/posts", (req, res) => {
-  db.all("SELECT * FROM posts", [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
+
 
 
 // Create a new post
