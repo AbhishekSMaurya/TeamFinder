@@ -652,8 +652,9 @@ function Teams({ currentUser }) {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to add team");
-        return res.text();
+        return res.json();  // ✔ change this
       })
+
       .then(() => {
         alert("Your team is created successfully!");
 
