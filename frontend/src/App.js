@@ -588,12 +588,12 @@ function Teams({ currentUser }) {
       socials: {},
     };
 
-    fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`, 
- {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newMember), // ✅ send the object directly
-    })
+    fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newMember), // ✅ send the object directly
+      })
       .then(async (res) => {
         if (!res.ok) {
           const errorText = await res.text();
@@ -637,10 +637,11 @@ function Teams({ currentUser }) {
 
     const formattedTeam = {
       ...newTeam,
-      id: Date.now(), // assign a unique id
+      id: Date.now(),
       members: membersArray,
-      skills: newTeam.skills.split(',').map(skill => skill.trim())
+      skills: newTeam.skills // now it's a plain string
     };
+
 
     fetch("https://teamfinder-53lz.onrender.com/api/teams", {
       method: "POST",
@@ -1595,10 +1596,10 @@ function Announcements({ currentUser }) {
   };
 
   const toggleLike = (postId) => {
-      if (!postId) {
-        console.error("Invalid post ID");
-        return;
-      }
+    if (!postId) {
+      console.error("Invalid post ID");
+      return;
+    }
     const updated = announcements.map((post) => {
 
       if (post.id === postId) {
