@@ -1594,7 +1594,12 @@ function Announcements({ currentUser }) {
   };
 
   const toggleLike = (postId) => {
+      if (!postId) {
+        console.error("Invalid post ID");
+        return;
+      }
     const updated = announcements.map((post) => {
+
       if (post.id === postId) {
         const liked = (post.likes || []).includes(currentUser.id);
         return {
