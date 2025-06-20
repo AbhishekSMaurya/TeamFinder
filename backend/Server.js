@@ -120,25 +120,98 @@ app.get("/api/posts", (req, res) => {
 
 
 // Create a new post
+// Create new post (FULL FORMAT)
 app.post("/api/posts", (req, res) => {
-  const { title, content } = req.body;
-  const stmt = `INSERT INTO posts (title, content) VALUES (?, ?)`;
-  db.run(stmt, [title, content], function (err) {
+  const {
+    authorId,
+    authorName,
+    content,
+    likes = [],
+    dislikes = [],
+    shares = 0,
+  } = req.body;
+
+  const stmt = `INSERT INTO posts (authorId, authorName, content, likes, dislikes, shares)
+                VALUES (?, ?, ?, ?, ?, ?)`;
+
+  db.run(stmt, [
+    authorId,
+    authorName,
+    content,
+    JSON.stringify(likes),
+    JSON.stringify(dislikes),
+    shares
+  ], function (err) {
     if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id: this.lastID, title, content });
+
+    res.status(201).json({
+      id: this.lastID,
+      authorId,
+      authorName,
+      content,
+      likes,
+      dislikes,
+      shares
+    });
   });
 });
-
 
 // Update existing post
 app.put("/api/posts/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { title, content } = req.body;
-  db.run(`UPDATE posts SET title = ?, content = ? WHERE id = ?`, [title, content, id], function (err) {
+  const {
+    authorId,
+    authorName,
+    content,
+    likes = [],
+    dislikes = [],
+    shares = 0
+  } = req.body;
+
+  db.run(
+    `UPDATE posts SET 
+      authorId = ?, 
+      authorName = ?, 
+      content = ?, 
+      likes = ?, 
+      dislikes = ?, 
+      shares = ? 
+    WHERE id = ?`,
+    [
+      authorId,
+      authorName,
+      content,
+      JSON.stringify(likes),
+      JSON.stringify(dislikes),
+      shares,
+      id
+    ],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ message: "Post updated" });
+    }
+  );
+});
+
+// Get all posts (properly parsed)
+app.get("/api/posts", (req, res) => {
+  db.all("SELECT * FROM posts", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json({ message: "Post updated" });
+
+    const parsed = rows.map(row => ({
+      id: row.id,
+      authorId: row.authorId,
+      authorName: row.authorName,
+      content: row.content,
+      likes: JSON.parse(row.likes || "[]"),
+      dislikes: JSON.parse(row.dislikes || "[]"),
+      shares: row.shares || 0
+    }));
+
+    res.json(parsed);
   });
 });
+
 
 
 // Get explore content
