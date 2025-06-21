@@ -77,6 +77,10 @@ app.post("/api/teams/:id/join", (req, res) => {
     } catch (parseErr) {
       return res.status(500).json({ error: "Failed to parse team members" });
     }
+    if (members.some(member => member.email === email)) {
+      return res.status(400).json({ error: "You are already a member of this team." });
+    }
+
 
     // Add the new member
     members.push({ name, email, image, role, socials });
@@ -317,37 +321,38 @@ const storage = multer.diskStorage({
 
 
 
-app.get("/api/projects", (req, res) => {
-  db.all("SELECT * FROM projects", [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
+const pool = require('./db'); // at top of file
+
+// GET all projects
+app.get("/api/projects", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM projects ORDER BY id DESC");
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching projects:", err.message);
+    res.status(500).json({ error: "Failed to load projects" });
+  }
 });
 
-
-// Add a new project
-const projectStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, Date.now() + ext);
-  },
-});
-
-const projectUpload = multer({ storage: projectStorage });
-
-app.post("/api/projects", projectUpload.fields([{ name: "image" }, { name: "file" }]), (req, res) => {
+// POST new project
+app.post("/api/projects", upload.fields([{ name: "image" }, { name: "file" }]), async (req, res) => {
   const { title, tech, github } = req.body;
   const image = req.files?.image ? `/uploads/${req.files.image[0].filename}` : null;
   const file = req.files?.file ? `/uploads/${req.files.file[0].filename}` : null;
 
-  const stmt = `INSERT INTO projects (title, tech, github, image, file) VALUES (?, ?, ?, ?, ?)`;
-  db.run(stmt, [title, tech, github, image, file], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ id: this.lastID, title, tech, github, image, file });
-  });
+  try {
+    const insertQuery = `
+      INSERT INTO projects (title, tech, github, image, file)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *`;
+    const values = [title, tech, github, image, file];
+
+    const result = await pool.query(insertQuery, values);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error saving project:", err.message);
+    res.status(500).json({ error: "Failed to save project" });
+  }
 });
 
 
