@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const fs = require('fs');
 const isProduction = process.env.NODE_ENV === "production";
 const dbDir = isProduction ? "/var/data" : __dirname;
 const dbPath = path.join(dbDir, "teamfinder.db");
