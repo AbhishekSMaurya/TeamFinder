@@ -82,11 +82,36 @@ db.serialize(() => {
   comments TEXT DEFAULT '[]'
   )`);
 
-
-
-
-
   // Add more tables for posts, projects, etc. if needed
 });
+
+// ✅ Seed mockContent if explore table is empty
+db.get("SELECT COUNT(*) AS count FROM explore", (err, row) => {
+  if (err) return console.error("❌ Failed to count explore rows:", err.message);
+
+  if (row?.count === 0) {
+    console.log("✨ Seeding mock explore content...");
+
+    const mockContent = [
+      { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=1', user: 'Aarav', content: '', likes: 0, comments: [] },
+      { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=2', user: 'Meera', content: '', likes: 0, comments: [] },
+      { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', user: 'Rahul', content: '', likes: 0, comments: [] },
+      { type: 'text', content: 'Just finished building my first full-stack app!', user: 'Sneha', url: '', likes: 0, comments: [] },
+      { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=5', user: 'Dev', content: '', likes: 0, comments: [] },
+      { type: 'video', url: 'https://www.w3schools.com/html/movie.mp4', user: 'Priya', content: '', likes: 0, comments: [] },
+      { type: 'text', content: 'Traveling to the mountains. Peace. ☁️', user: 'Ankit', url: '', likes: 0, comments: [] },
+      { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=8', user: 'Tanvi', content: '', likes: 0, comments: [] }
+    ];
+
+    const stmt = db.prepare(`INSERT INTO explore (type, url, content, user, likes, comments) VALUES (?, ?, ?, ?, ?, ?)`);
+
+    mockContent.forEach(post => {
+      stmt.run(post.type, post.url, post.content, post.user, post.likes, JSON.stringify(post.comments));
+    });
+
+    stmt.finalize();
+  }
+});
+
 
 module.exports = db;
