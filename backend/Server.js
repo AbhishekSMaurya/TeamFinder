@@ -274,33 +274,48 @@ app.get("/api/posts", (req, res) => {
 
 // Get explore content
 app.get("/api/explore", (req, res) => {
-  db.all("SELECT * FROM posts", [], (err, rows) => {
+  db.all("SELECT * FROM explore ORDER BY id DESC", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
+
+    const parsed = rows.map(r => ({
+      ...r,
+      likes: r.likes || 0,
+      comments: r.comments ? JSON.parse(r.comments) : []
+    }));
+
+    res.json(parsed);
   });
 });
 
 
+
 // POST update explore data (likes/comments)
-app.post('/api/explore/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedPost = req.body;
+app.post("/api/explore", (req, res) => {
+  const { type, url = '', content = '', user = 'Anonymous', likes = 0, comments = [] } = req.body;
 
-  try {
-    const posts = JSON.parse(fs.readFileSync(exploreFile, 'utf-8'));
-    const index = posts.findIndex(p => p.id === parseInt(id));
+  const stmt = `INSERT INTO explore (type, url, content, user, likes, comments) VALUES (?, ?, ?, ?, ?, ?)`;
+  db.run(stmt, [type, url, content, user, likes, JSON.stringify(comments)], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
 
-    if (index === -1) return res.status(404).json({ error: 'Post not found' });
-
-    posts[index] = updatedPost;
-
-    fs.writeFileSync(exploreFile, JSON.stringify(posts, null, 2), 'utf-8');
-    res.json({ message: 'Explore post updated' });
-  } catch (err) {
-    console.error('Failed to update post', err);
-    res.status(500).json({ error: 'Failed to update post' });
-  }
+    res.status(201).json({
+      id: this.lastID,
+      type, url, content, user, likes, comments
+    });
+  });
 });
+
+app.post("/api/explore/:id", (req, res) => {
+  const { id } = req.params;
+  const { type, url, content, user, likes, comments } = req.body;
+
+  const stmt = `UPDATE explore SET type = ?, url = ?, content = ?, user = ?, likes = ?, comments = ? WHERE id = ?`;
+  db.run(stmt, [type, url, content, user, likes, JSON.stringify(comments), id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Explore post updated" });
+  });
+});
+
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

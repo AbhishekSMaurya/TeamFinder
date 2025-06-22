@@ -4,23 +4,31 @@ const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
 
 // db.js
 // db.js
-const { Pool } = require('pg');
+const mockContent = [
+  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=1', user: 'Aarav', content: '', likes: 0, comments: [] },
+  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=2', user: 'Meera', content: '', likes: 0, comments: [] },
+  { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', user: 'Rahul', content: '', likes: 0, comments: [] },
+  { type: 'text', content: 'Just finished building my first full-stack app!', user: 'Sneha', url: '', likes: 0, comments: [] },
+  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=5', user: 'Dev', content: '', likes: 0, comments: [] },
+  { type: 'video', url: 'https://www.w3schools.com/html/movie.mp4', user: 'Priya', content: '', likes: 0, comments: [] },
+  { type: 'text', content: 'Traveling to the mountains. Peace. ☁️', user: 'Ankit', url: '', likes: 0, comments: [] },
+  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=8', user: 'Tanvi', content: '', likes: 0, comments: [] },
+];
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // required for Render PostgreSQL
-  },
+db.get("SELECT COUNT(*) as count FROM explore", (err, row) => {
+  if (err) return console.error("❌ Failed to count explore rows:", err.message);
+  if (row?.count === 0) {
+    const stmt = db.prepare(`INSERT INTO explore (type, url, content, user, likes, comments) VALUES (?, ?, ?, ?, ?, ?)`);
+    mockContent.forEach(post => {
+      stmt.run(post.type, post.url, post.content, post.user, post.likes, JSON.stringify(post.comments));
+    });
+    stmt.finalize();
+    console.log("✨ Explore content seeded.");
+  }
 });
-
-module.exports = pool; // ✅ not an object, just pool
-
-
-
-
 db.serialize(() => {
-    // Teammates Table
-    db.run(`CREATE TABLE IF NOT EXISTS teammates (
+  // Teammates Table
+  db.run(`CREATE TABLE IF NOT EXISTS teammates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT,
@@ -30,16 +38,16 @@ db.serialize(() => {
     password TEXT
   )`);
 
-    // Teams Table
-    db.run(`CREATE TABLE IF NOT EXISTS teams (
+  // Teams Table
+  db.run(`CREATE TABLE IF NOT EXISTS teams (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     description TEXT,
     skills TEXT
   )`);
 
-    // Messages Table
-    db.run(`CREATE TABLE IF NOT EXISTS messages (
+  // Messages Table
+  db.run(`CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     senderId TEXT,
     receiverId TEXT,
@@ -47,13 +55,13 @@ db.serialize(() => {
     timestamp TEXT
     )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS posts (
+  db.run(`CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
     content TEXT
     )`);
 
-    db.run(`
+  db.run(`
   CREATE TABLE IF NOT EXISTS announcements (
     id INTEGER PRIMARY KEY,
     title TEXT,
@@ -69,7 +77,7 @@ db.serialize(() => {
   )
 `);
 
-    db.run(`CREATE TABLE IF NOT EXISTS projects (
+  db.run(`CREATE TABLE IF NOT EXISTS projects (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
     tech TEXT,
@@ -78,17 +86,28 @@ db.serialize(() => {
     file TEXT
     )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS feedback (
+  db.run(`CREATE TABLE IF NOT EXISTS feedback (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT,
     feedback TEXT,
     timestamp TEXT
     )`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS explore (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  type TEXT NOT NULL,
+  url TEXT,
+  content TEXT,
+  user TEXT,
+  likes INTEGER DEFAULT 0,
+  comments TEXT DEFAULT '[]'
+  )`);
 
 
 
-    // Add more tables for posts, projects, etc. if needed
+
+
+  // Add more tables for posts, projects, etc. if needed
 });
 
 module.exports = db;
