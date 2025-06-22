@@ -575,86 +575,86 @@ function Teams({ currentUser }) {
   };
 
   const handleJoinTeam = (teamId) => {
-  if (!currentUser || !currentUser.name || !currentUser.email) {
-    alert("Please log in with a valid account to join a team.");
-    return;
-  }
+    if (!currentUser || !currentUser.name || !currentUser.email) {
+      alert("Please log in with a valid account to join a team.");
+      return;
+    }
 
-  const newMember = {
-    name: currentUser.name,
-    email: currentUser.email,
-    image: currentUser.avatar || "",
-    role: "Member",
-    socials: {}
+    const newMember = {
+      name: currentUser.name,
+      email: currentUser.email,
+      image: currentUser.avatar || "",
+      role: "Member",
+      socials: {}
+    };
+
+    fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newMember)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to join team");
+        return res.json();
+      })
+      .then((updatedTeam) => {
+        alert(`✅ Joined team: ${updatedTeam.name}`);
+
+        setTeams(prev =>
+          prev.map(team => team.id === updatedTeam.id ? updatedTeam : team)
+        );
+      })
+      .catch(err => {
+        console.error("❌ Failed to join:", err);
+        alert("Couldn't join team.");
+      });
   };
 
-  fetch(`https://teamfinder-53lz.onrender.com/api/teams/${teamId}/join`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newMember)
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to join team");
-      return res.json();
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const membersArray = newTeam.members.split(',').map(name => ({
+      name: name.trim(),
+      email: '',
+      image: '',
+      role: '',
+      socials: {}
+    }));
+
+    const formattedTeam = {
+      name: newTeam.name,
+      description: newTeam.description,
+      skills: newTeam.skills, // Send as string
+      members: membersArray
+    };
+
+    fetch("https://teamfinder-53lz.onrender.com/api/teams", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formattedTeam)
     })
-    .then((updatedTeam) => {
-      alert(`✅ Joined team: ${updatedTeam.name}`);
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to add team");
+        return res.json();
+      })
+      .then((createdTeam) => {
+        alert("✅ Team created successfully!");
 
-      setTeams(prev =>
-        prev.map(team => team.id === updatedTeam.id ? updatedTeam : team)
-      );
-    })
-    .catch(err => {
-      console.error("❌ Failed to join:", err);
-      alert("Couldn't join team.");
-    });
-};
+        setTeams((prev) => [...prev, createdTeam]); // Use server-sent ID
 
-
-
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-
-  const membersArray = newTeam.members.split(',').map(name => ({
-    name: name.trim(),
-    email: '',
-    image: '',
-    role: '',
-    socials: {}
-  }));
-
-  const formattedTeam = {
-    name: newTeam.name,
-    description: newTeam.description,
-    skills: newTeam.skills, // Send as string
-    members: membersArray
+        setNewTeam({ name: "", members: "", description: "", skills: "" });
+        setShowForm(false);
+      })
+      .catch((err) => {
+        console.error("❌ Error creating team:", err);
+        alert("Failed to create team.");
+      });
   };
-
-  fetch("https://teamfinder-53lz.onrender.com/api/teams", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(formattedTeam)
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Failed to add team");
-      return res.json();
-    })
-    .then((createdTeam) => {
-      alert("✅ Team created successfully!");
-
-      setTeams((prev) => [...prev, createdTeam]); // Use server-sent ID
-
-      setNewTeam({ name: "", members: "", description: "", skills: "" });
-      setShowForm(false);
-    })
-    .catch((err) => {
-      console.error("❌ Error creating team:", err);
-      alert("Failed to create team.");
-    });
-};
 
 
 
@@ -1434,7 +1434,7 @@ function Projects() {
 
             {/* ✅ If Image uploaded */}
             {project.image ? (
-              <img src={project.image} alt="Project Preview" className="project-image" />
+              <img src={'https://teamfinder-53lz.onrender.com/${project.image'} alt="Project Preview" className="project-image" />
             ) : project.file ? (
               // ✅ Show generic PDF or ZIP icon if only file is uploaded
               <div className="file-preview">
@@ -1453,64 +1453,64 @@ function Projects() {
             {project.file && (
               <>
                 {project.file.toLowerCase().endsWith(".pdf") && (
-                  <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} target="_blank" rel="noopener noreferrer">
-                    📄 View PDF
-                  </a>
+                  <a href={`https://teamfinder-53lz.onrender.com${project.file}`} target="_blank" rel="noopener noreferrer">
+                📄 View PDF
+              </a>
 
                 )}
 
-                {(project.file.toLowerCase().endsWith(".zip") ||
-                  project.file.toLowerCase().endsWith(".rar")) && (
-                    <a href={`https://teamfinder-53lz.onrender.com/${project.file}`} download target="_blank">📦 Download ZIP</a>
-                  )}
-              </>
-            )}
+            {(project.file.toLowerCase().endsWith(".zip") ||
+              project.file.toLowerCase().endsWith(".rar")) && (
+               <a href={`https://teamfinder-53lz.onrender.com${project.file}`} target="_blank" rel="noopener noreferrer">📦 Download ZIP</a>
+              )}
+          </>
+        )}
 
-            <a href={project.github} target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+        <a href={project.github} target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
 
 
-          </div>
-        ))}
       </div>
-
-
-      {/* 👇 Move the form here BELOW the list */}
-      <form ref={formRef} onSubmit={handleSubmit} className="project-form">
-        <h3>Share Your Project</h3>
-        <input
-          type="text"
-          name="title"
-          value={form.title}
-          placeholder="Project Title"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="tech"
-          value={form.tech}
-          placeholder="Tech Stack"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="url"
-          name="github"
-          value={form.github}
-          placeholder="GitHub Link"
-          onChange={handleChange}
-        />
-        <label>
-          Upload Image:
-          <input type="file" name="image" accept="image/*" onChange={handleChange} />
-        </label>
-        <label>
-          Upload File (PDF/ZIP):
-          <input type="file" name="file" accept=".pdf,.zip,.rar" onChange={handleChange} />
-        </label>
-        <button type="submit">Add Project</button>
-      </form>
+        ))}
     </div>
+
+
+      {/* 👇 Move the form here BELOW the list */ }
+  <form ref={formRef} onSubmit={handleSubmit} className="project-form">
+    <h3>Share Your Project</h3>
+    <input
+      type="text"
+      name="title"
+      value={form.title}
+      placeholder="Project Title"
+      onChange={handleChange}
+      required
+    />
+    <input
+      type="text"
+      name="tech"
+      value={form.tech}
+      placeholder="Tech Stack"
+      onChange={handleChange}
+      required
+    />
+    <input
+      type="url"
+      name="github"
+      value={form.github}
+      placeholder="GitHub Link"
+      onChange={handleChange}
+    />
+    <label>
+      Upload Image:
+      <input type="file" name="image" accept="image/*" onChange={handleChange} />
+    </label>
+    <label>
+      Upload File (PDF/ZIP):
+      <input type="file" name="file" accept=".pdf,.zip,.rar" onChange={handleChange} />
+    </label>
+    <button type="submit">Add Project</button>
+  </form>
+    </div >
   );
 }
 
