@@ -1,40 +1,10 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-const fs = require('fs');
-const isProduction = process.env.NODE_ENV === "production";
-const dbPath = isProduction
-  ? "/var/data/teamfinder.db"                    // ✅ Render uses persistent path
-  : path.join(__dirname, "teamfinder.db");  
-
-// ✅ Ensure the directory exists (for local dev)
-
-// ✅ Connect to SQLite
-const db = new sqlite3.Database(dbPath);
+const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
 
 // db.js
 // db.js
-const mockContent = [
-  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=1', user: 'Aarav', content: '', likes: 0, comments: [] },
-  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=2', user: 'Meera', content: '', likes: 0, comments: [] },
-  { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', user: 'Rahul', content: '', likes: 0, comments: [] },
-  { type: 'text', content: 'Just finished building my first full-stack app!', user: 'Sneha', url: '', likes: 0, comments: [] },
-  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=5', user: 'Dev', content: '', likes: 0, comments: [] },
-  { type: 'video', url: 'https://www.w3schools.com/html/movie.mp4', user: 'Priya', content: '', likes: 0, comments: [] },
-  { type: 'text', content: 'Traveling to the mountains. Peace. ☁️', user: 'Ankit', url: '', likes: 0, comments: [] },
-  { type: 'image', url: 'https://source.unsplash.com/random/300x300?sig=8', user: 'Tanvi', content: '', likes: 0, comments: [] },
-];
 
-db.get("SELECT COUNT(*) as count FROM explore", (err, row) => {
-  if (err) return console.error("❌ Failed to count explore rows:", err.message);
-  if (row?.count === 0) {
-    const stmt = db.prepare(`INSERT INTO explore (type, url, content, user, likes, comments) VALUES (?, ?, ?, ?, ?, ?)`);
-    mockContent.forEach(post => {
-      stmt.run(post.type, post.url, post.content, post.user, post.likes, JSON.stringify(post.comments));
-    });
-    stmt.finalize();
-    console.log("✨ Explore content seeded.");
-  }
-});
 db.serialize(() => {
   // Teammates Table
   db.run(`CREATE TABLE IF NOT EXISTS teammates (
