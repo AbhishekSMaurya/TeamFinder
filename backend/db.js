@@ -1,6 +1,16 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
+
+// ✅ Detect if running on Render
+const isRender = process.env.RENDER === "true";
+
+// ✅ Choose DB path
+const dbPath = isRender
+  ? "/var/data/teamfinder.db"             // Render uses persistent volume
+  : path.join(__dirname, "teamfinder.db"); // Local dev uses project folder
+
+const db = new sqlite3.Database(dbPath);
+
 
 // db.js
 // db.js
