@@ -1337,30 +1337,25 @@ function Projects() {
     image: '',
     file: ''
   });
+
+  const formRef = useRef(null);
+  const [search, setSearch] = useState('');
+
   useEffect(() => {
-    // Fetch existing projects
     fetch("https://teamfinder-53lz.onrender.com/api/projects")
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error("Error loading projects:", err));
   }, []);
 
-  const [search, setSearch] = useState('');
-
-  const formRef = useRef(null); // 👉 Ref for scrolling to form
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files && files.length > 0) {
-      setForm({ ...form, [name]: files[0] });  // ✅ Use actual File object
+      setForm({ ...form, [name]: files[0] });
     } else {
       setForm({ ...form, [name]: value });
     }
   };
-
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -1368,17 +1363,16 @@ function Projects() {
     formData.append("title", form.title);
     formData.append("tech", form.tech);
     formData.append("github", form.github);
-
     if (form.image) formData.append("image", form.image);
     if (form.file) formData.append("file", form.file);
 
     try {
       const res = await fetch("https://teamfinder-53lz.onrender.com/api/projects", {
         method: "POST",
-        body: formData,
+        body: formData
       });
-      const saved = await res.json();
 
+      const saved = await res.json();
       if (!res.ok) throw new Error(saved.error || "Upload failed");
 
       setProjects([saved, ...projects]);
@@ -1389,13 +1383,10 @@ function Projects() {
     }
   };
 
-
-
   const filtered = projects.filter(p =>
     (p.title || "").toLowerCase().includes(search.toLowerCase()) ||
     (p.tech || "").toLowerCase().includes(search.toLowerCase())
   );
-
 
   const scrollToForm = () => {
     if (formRef.current) {
@@ -1405,8 +1396,6 @@ function Projects() {
 
   return (
     <div className="projects-container">
-
-      {/* 🆕 Banner Section */}
       <section className="projects-banner">
         <div className="projects-banner-text">
           <h1>Wanna share your skills with others?</h1>
@@ -1417,7 +1406,6 @@ function Projects() {
         </div>
       </section>
 
-      {/* 👇 Your Existing Part Starts Here */}
       <h2>📁 Project Showcase</h2>
 
       <input
@@ -1431,12 +1419,13 @@ function Projects() {
       <div className="project-grid">
         {filtered.map((project) => (
           <div key={project.id} className="project-card">
-
-            {/* ✅ If Image uploaded */}
             {project.image ? (
-              <img src={'https://teamfinder-53lz.onrender.com/${project.image'} alt="Project Preview" className="project-image" />
+              <img
+                src={`https://teamfinder-53lz.onrender.com${project.image}`}
+                alt="Project Preview"
+                className="project-image"
+              />
             ) : project.file ? (
-              // ✅ Show generic PDF or ZIP icon if only file is uploaded
               <div className="file-preview">
                 {project.file.toLowerCase().endsWith(".pdf") && (
                   <img src="./pdf-icon.png" alt="PDF File" className="file-icon" />
@@ -1454,65 +1443,64 @@ function Projects() {
               <>
                 {project.file.toLowerCase().endsWith(".pdf") && (
                   <a href={`https://teamfinder-53lz.onrender.com${project.file}`} target="_blank" rel="noopener noreferrer">
-                📄 View PDF
-              </a>
-
+                    📄 View PDF
+                  </a>
                 )}
-
-            {(project.file.toLowerCase().endsWith(".zip") ||
-              project.file.toLowerCase().endsWith(".rar")) && (
-               <a href={`https://teamfinder-53lz.onrender.com${project.file}`} target="_blank" rel="noopener noreferrer">📦 Download ZIP</a>
-              )}
-          </>
-        )}
-
-        <a href={project.github} target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-
-
-      </div>
+                {(project.file.toLowerCase().endsWith(".zip") || project.file.toLowerCase().endsWith(".rar")) && (
+                  <a href={`https://teamfinder-53lz.onrender.com${project.file}`} target="_blank" rel="noopener noreferrer">
+                    📦 Download ZIP
+                  </a>
+                )}
+              </>
+            )}
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                🔗 GitHub
+              </a>
+            )}
+          </div>
         ))}
+      </div>
+
+      <form ref={formRef} onSubmit={handleSubmit} className="project-form">
+        <h3>Share Your Project</h3>
+        <input
+          type="text"
+          name="title"
+          value={form.title}
+          placeholder="Project Title"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="tech"
+          value={form.tech}
+          placeholder="Tech Stack"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="url"
+          name="github"
+          value={form.github}
+          placeholder="GitHub Link"
+          onChange={handleChange}
+        />
+        <label>
+          Upload Image:
+          <input type="file" name="image" accept="image/*" onChange={handleChange} />
+        </label>
+        <label>
+          Upload File (PDF/ZIP):
+          <input type="file" name="file" accept=".pdf,.zip,.rar" onChange={handleChange} />
+        </label>
+        <button type="submit">Add Project</button>
+      </form>
     </div>
-
-
-      {/* 👇 Move the form here BELOW the list */ }
-  <form ref={formRef} onSubmit={handleSubmit} className="project-form">
-    <h3>Share Your Project</h3>
-    <input
-      type="text"
-      name="title"
-      value={form.title}
-      placeholder="Project Title"
-      onChange={handleChange}
-      required
-    />
-    <input
-      type="text"
-      name="tech"
-      value={form.tech}
-      placeholder="Tech Stack"
-      onChange={handleChange}
-      required
-    />
-    <input
-      type="url"
-      name="github"
-      value={form.github}
-      placeholder="GitHub Link"
-      onChange={handleChange}
-    />
-    <label>
-      Upload Image:
-      <input type="file" name="image" accept="image/*" onChange={handleChange} />
-    </label>
-    <label>
-      Upload File (PDF/ZIP):
-      <input type="file" name="file" accept=".pdf,.zip,.rar" onChange={handleChange} />
-    </label>
-    <button type="submit">Add Project</button>
-  </form>
-    </div >
   );
 }
+
 
 function Announcements({ currentUser }) {
   const [announcements, setAnnouncements] = useState([]);
