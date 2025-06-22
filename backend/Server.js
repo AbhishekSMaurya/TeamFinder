@@ -333,8 +333,20 @@ app.get('/api/projects', async (req, res) => {
 });
 
 // Post a new project
-app.post('/api/projects', async (req, res) => {
-  const { title, tech, github, image, file } = req.body;
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+const uploadProject = multer({ storage: multerStorage });
+
+app.post('/api/projects', uploadProject.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'file', maxCount: 1 }
+]), async (req, res) => {
+  const { title, tech, github } = req.body;
+
+  const image = req.files?.image?.[0]?.path || '';
+  const file = req.files?.file?.[0]?.path || '';
 
   try {
     const result = await pool.query(
@@ -343,9 +355,11 @@ app.post('/api/projects', async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
+    console.error("❌ Project insert failed:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 app.get("/api/announcements", (req, res) => {
