@@ -321,39 +321,31 @@ const storage = multer.diskStorage({
 
 
 
-const pool = require('./db'); // at top of file
+const pool = require('./db');
 
-// GET all projects
-app.get("/api/projects", async (req, res) => {
+app.get('/api/projects', async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM projects ORDER BY id DESC");
+    const result = await pool.query('SELECT * FROM projects');
     res.json(result.rows);
   } catch (err) {
-    console.error("Error fetching projects:", err.message);
-    res.status(500).json({ error: "Failed to load projects" });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// POST new project
-app.post("/api/projects", upload.fields([{ name: "image" }, { name: "file" }]), async (req, res) => {
-  const { title, tech, github } = req.body;
-  const image = req.files?.image ? `/uploads/${req.files.image[0].filename}` : null;
-  const file = req.files?.file ? `/uploads/${req.files.file[0].filename}` : null;
+app.post('/api/projects', async (req, res) => {
+  const { title, tech, github, image, file } = req.body;
 
   try {
-    const insertQuery = `
-      INSERT INTO projects (title, tech, github, image, file)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING *`;
-    const values = [title, tech, github, image, file];
-
-    const result = await pool.query(insertQuery, values);
+    const result = await pool.query(
+      'INSERT INTO projects (title, tech, github, image, file) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [title, tech, github, image, file]
+    );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error("Error saving project:", err.message);
-    res.status(500).json({ error: "Failed to save project" });
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 
 app.get("/api/announcements", (req, res) => {

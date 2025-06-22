@@ -2,17 +2,19 @@ const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
 
-const { Pool } = require("pg");
-require("dotenv").config();
+// db.js
+const { Pool } = require('pg');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // Required for Render
+    rejectUnauthorized: false,
   },
 });
 
 module.exports = pool;
+
+
 
 db.serialize(() => {
     // Teammates Table
