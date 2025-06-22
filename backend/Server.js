@@ -305,17 +305,6 @@ app.post('/api/explore/:id', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Setup multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);       // ✅ get .pdf or .zip
-    const name = Date.now() + ext;
-    cb(null, name); // ✅ example: 1715777769147.pdf
-  }
-});
-
 
 // Allow uploads folder to be accessed publicly
 
@@ -323,39 +312,41 @@ const storage = multer.diskStorage({
 
 const pool = require('./pgdb');
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+
+const projectUpload = multer({ storage });
+
+// ✅ GET All Projects
 app.get('/api/projects', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM projects');
+    const result = await pool.query('SELECT * FROM projects ORDER BY id DESC');
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Post a new project
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
-});
-const uploadProject = multer({ storage: multerStorage });
-
-app.post('/api/projects', uploadProject.fields([
+// ✅ POST New Project (image + file upload)
+app.post('/api/projects', projectUpload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'file', maxCount: 1 }
 ]), async (req, res) => {
   const { title, tech, github } = req.body;
 
-  const image = req.files?.image?.[0]?.path || '';
-  const file = req.files?.file?.[0]?.path || '';
+  const image = req.files?.image?.[0]?.path ? '/' + req.files.image[0].path.replace(/\\/g, '/') : null;
+  const file = req.files?.file?.[0]?.path ? '/' + req.files.file[0].path.replace(/\\/g, '/') : null;
 
   try {
     const result = await pool.query(
       'INSERT INTO projects (title, tech, github, image, file) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [title, tech, github, image, file]
+      [title, tech, github || '', image, file]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error("❌ Project insert failed:", err.message);
+    console.error('❌ Project insert failed:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
