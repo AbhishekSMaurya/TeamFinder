@@ -309,9 +309,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Allow uploads folder to be accessed publicly
 
 
-
-const pool = require('./pgdb');
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
@@ -320,36 +317,48 @@ const storage = multer.diskStorage({
 const projectUpload = multer({ storage });
 
 // ✅ GET All Projects
-app.get('/api/projects', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM projects ORDER BY id DESC');
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// ✅ GET all projects from SQLite
+app.get("/api/projects", (req, res) => {
+  db.all("SELECT * FROM projects ORDER BY id DESC", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
 });
 
-// ✅ POST New Project (image + file upload)
-app.post('/api/projects', projectUpload.fields([
+// ✅ POST new project to SQLite (with multer)
+app.post("/api/projects", projectUpload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'file', maxCount: 1 }
-]), async (req, res) => {
+]), (req, res) => {
   const { title, tech, github } = req.body;
 
-  const image = req.files?.image?.[0]?.path ? '/' + req.files.image[0].path.replace(/\\/g, '/') : null;
-  const file = req.files?.file?.[0]?.path ? '/' + req.files.file[0].path.replace(/\\/g, '/') : null;
+  const image = req.files?.image?.[0]?.path
+    ? "/" + req.files.image[0].path.replace(/\\/g, "/")
+    : null;
+  const file = req.files?.file?.[0]?.path
+    ? "/" + req.files.file[0].path.replace(/\\/g, "/")
+    : null;
 
-  try {
-    const result = await pool.query(
-      'INSERT INTO projects (title, tech, github, image, file) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [title, tech, github || '', image, file]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error('❌ Project insert failed:', err.message);
-    res.status(500).json({ error: err.message });
-  }
+  const stmt = `INSERT INTO projects (title, tech, github, image, file)
+                VALUES (?, ?, ?, ?, ?)`;
+
+  db.run(stmt, [title, tech, github || '', image, file], function (err) {
+    if (err) {
+      console.error("❌ SQLite insert failed:", err.message);
+      return res.status(500).json({ error: err.message });
+    }
+
+    res.status(201).json({
+      id: this.lastID,
+      title,
+      tech,
+      github,
+      image,
+      file
+    });
+  });
 });
+
 
 
 
