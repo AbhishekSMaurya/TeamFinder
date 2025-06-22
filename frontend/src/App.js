@@ -1342,11 +1342,18 @@ function Projects() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch("https://teamfinder-53lz.onrender.com/api/projects")
-      .then(res => res.json())
-      .then(data => setProjects(data))
-      .catch(err => console.error("Error loading projects:", err));
-  }, []);
+  fetch("https://teamfinder-53lz.onrender.com/api/projects")
+    .then(res => res.json())
+    .then(data => {
+      console.log("✅ Projects API response:", data);
+      setProjects(data);
+    })
+    .catch(err => {
+      console.error("❌ Failed to fetch projects:", err);
+      setProjects([]);  // fallback to empty array to prevent crash
+    });
+}, []);
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -1383,10 +1390,13 @@ function Projects() {
     }
   };
 
-  const filtered = projects.filter(p =>
-    (p.title || "").toLowerCase().includes(search.toLowerCase()) ||
-    (p.tech || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = Array.isArray(projects)
+  ? projects.filter(p =>
+      (p.title || "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.tech || "").toLowerCase().includes(search.toLowerCase())
+    )
+  : [];
+
 
   const scrollToForm = () => {
     if (formRef.current) {
