@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 5000;
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const path = require("path");
-const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
+const db = require('./db'); // ✅ Import the configured db.js
+
 
 
 // Middleware
@@ -315,9 +316,10 @@ app.post("/api/explore/:id", (req, res) => {
   });
 });
 
+app.use('/uploads', express.static('/var/data/uploads'));
 
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Setup multer
 
