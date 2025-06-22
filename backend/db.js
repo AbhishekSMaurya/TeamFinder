@@ -3,16 +3,18 @@ const path = require("path");
 const db = new sqlite3.Database(path.join(__dirname, "teamfinder.db"));
 
 // db.js
+// db.js
 const { Pool } = require('pg');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // required for Render PostgreSQL
   },
 });
 
-module.exports = pool;
+module.exports = pool; // ✅ not an object, just pool
+
 
 
 

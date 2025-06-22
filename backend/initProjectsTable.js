@@ -1,25 +1,23 @@
-// initProjectsTable.js
-const pool = require('./db');
+const pool = require("./pgdb");
 
-const createProjectsTable = async () => {
+async function createProjectsTable() {
+  const query = `
+    CREATE TABLE IF NOT EXISTS projects (
+      id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL,
+      tech TEXT,
+      github TEXT,
+      image TEXT,
+      file TEXT
+    );
+  `;
+
   try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS projects (
-        id SERIAL PRIMARY KEY,
-        title TEXT NOT NULL,
-        tech TEXT,
-        github TEXT,
-        image TEXT,
-        file TEXT
-      );
-    `);
-
-    console.log("✅ 'projects' table created successfully!");
-  } catch (error) {
-    console.error("❌ Error creating projects table:", error);
-  } finally {
-    pool.end();
+    await pool.query(query);
+    console.log("✅ Projects table created successfully.");
+  } catch (err) {
+    console.error("❌ Error creating projects table:", err);
   }
-};
+}
 
 createProjectsTable();

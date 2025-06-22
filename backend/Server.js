@@ -321,7 +321,7 @@ const storage = multer.diskStorage({
 
 
 
-const pool = require('./db');
+const pool = require('./pgdb');
 
 app.get('/api/projects', async (req, res) => {
   try {
@@ -332,6 +332,7 @@ app.get('/api/projects', async (req, res) => {
   }
 });
 
+// Post a new project
 app.post('/api/projects', async (req, res) => {
   const { title, tech, github, image, file } = req.body;
 
@@ -345,7 +346,6 @@ app.post('/api/projects', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 
 app.get("/api/announcements", (req, res) => {
