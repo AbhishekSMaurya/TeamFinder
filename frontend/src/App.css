@@ -523,3 +523,23 @@ button[type="submit"]:hover {
     --border-color: #444;
     color: white;
 }
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 0;
+    font-size: 15px;
+  }
+
+  .wrapper {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .top-bar h1 {
+    font-size: 1.5rem;
+  }
+}

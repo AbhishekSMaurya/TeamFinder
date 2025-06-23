@@ -205,3 +205,24 @@
 .dark .chat-input button:hover {
   background-color: #5d3cd2;
 }
+
+@media screen and (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+  }
+
+  .chat-sidebar {
+    width: 100%;
+    height: auto;
+    overflow-x: scroll;
+  }
+
+  .chat-box {
+    height: auto;
+  }
+
+  .chat-messages {
+    max-height: 300px;
+  }
+}
+

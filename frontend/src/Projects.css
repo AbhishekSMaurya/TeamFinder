@@ -256,3 +256,36 @@ form input {
 .file-link:hover {
   background-color: #0056b3;
 }
+
+@media screen and (max-width: 768px) {
+  .projects-container {
+    padding: 1rem;
+  }
+
+  .project-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .project-card img {
+    height: auto;
+  }
+
+  .project-form {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+
+  .projects-banner-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .projects-banner-text p {
+    font-size: 1rem;
+  }
+
+  .share-project-btn {
+    width: 100%;
+    padding: 10px;
+  }
+}
