@@ -73,6 +73,8 @@ function Header({ darkMode, setDarkMode }) {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState('');
   const navigate = useNavigate();
+  const [showNav, setShowNav] = useState(false);
+
 
   const handleSearch = () => {
     const filtered = teammates.filter(teammate =>
@@ -128,12 +130,21 @@ function Header({ darkMode, setDarkMode }) {
 
         {/* Navbar */}
         <img src="/1.jpg" alt="Logo" className="imglogo" href="src/app.js" />
-        <nav className="top-nav">
-          <Link to="/home">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/support">Support</Link>
-          <Link to="/teams">Teams</Link>
-        </nav>
+        <div className="nav-toggle-wrapper">
+          <button
+            className="nav-toggle-arrow"
+            onClick={() => setShowNav(prev => !prev)}
+          >
+            ▼
+          </button>
+          <nav className={`top-nav ${showNav ? "show" : ""}`}>
+            <Link to="/home">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/support">Support</Link>
+            <Link to="/teams">Teams</Link>
+          </nav>
+        </div>
+
 
         {/* Search bar */}
         <div className="search-container" style={{ width: '50vh' }}>
@@ -1342,17 +1353,17 @@ function Projects() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-  fetch("https://teamfinder-53lz.onrender.com/api/projects")
-    .then(res => res.json())
-    .then(data => {
-      console.log("✅ Projects API response:", data);
-      setProjects(data);
-    })
-    .catch(err => {
-      console.error("❌ Failed to fetch projects:", err);
-      setProjects([]);  // fallback to empty array to prevent crash
-    });
-}, []);
+    fetch("https://teamfinder-53lz.onrender.com/api/projects")
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ Projects API response:", data);
+        setProjects(data);
+      })
+      .catch(err => {
+        console.error("❌ Failed to fetch projects:", err);
+        setProjects([]);  // fallback to empty array to prevent crash
+      });
+  }, []);
 
 
   const handleChange = (e) => {
@@ -1391,11 +1402,11 @@ function Projects() {
   };
 
   const filtered = Array.isArray(projects)
-  ? projects.filter(p =>
+    ? projects.filter(p =>
       (p.title || "").toLowerCase().includes(search.toLowerCase()) ||
       (p.tech || "").toLowerCase().includes(search.toLowerCase())
     )
-  : [];
+    : [];
 
 
   const scrollToForm = () => {

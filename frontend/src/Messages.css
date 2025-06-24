@@ -207,6 +207,7 @@
 }
 
 
+
 @media screen and (max-width: 768px) {
   .messages-container {
     flex-direction: column;
