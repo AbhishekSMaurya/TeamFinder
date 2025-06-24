@@ -252,9 +252,9 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        height: auto;
+        .header {
+        flex-direction: row;
+        height: 75px;
         padding: 10px;
     }
 
