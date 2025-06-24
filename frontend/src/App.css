@@ -500,6 +500,7 @@ button[type="submit"]:hover {
 
 .team-section h2 {
     text-align: center;
+    color: black;
 }
 
 .light-mode .team-section h2 {
