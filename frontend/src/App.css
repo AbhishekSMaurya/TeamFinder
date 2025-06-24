@@ -296,14 +296,18 @@ body {
   }
 
   .nav-toggle-arrow {
-    display: block;
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    color: #fff;
-  }
+        background: #0000008c;
+        border: 1px solid black;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        font-size: 1.4rem;
+        padding: .5rem;
+        position: absolute;
+        margin-top: 33rem;
+        float: right;
+        right: -96px;
+    }
 
   .top-nav {
     flex-direction: column;
