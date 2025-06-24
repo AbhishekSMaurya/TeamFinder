@@ -206,25 +206,8 @@
   background-color: #5d3cd2;
 }
 
-@media screen and (max-width: 768px) {
-  .chat-container {
-    flex-direction: column;
-  }
 
-  .chat-sidebar {
-    width: 100%;
-    height: auto;
-    overflow-x: scroll;
-  }
-
-  .chat-box {
-    height: auto;
-  }
-
-  .chat-messages {
-    max-height: 300px;
-  }
-  @media screen and (max-width: 768px) {
+ @media screen and (max-width: 768px) {
   .messages-container {
     flex-direction: column;
     position: relative;
@@ -271,5 +254,5 @@
     cursor: pointer;
   }
 }
-}
+
 
