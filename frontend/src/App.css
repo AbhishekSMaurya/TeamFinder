@@ -257,13 +257,8 @@ body {
 }
 
 .nav-toggle-arrow {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  cursor: pointer;
+  display: none;
 }
-
 .top-nav {
   display: flex;
   gap: 1rem;
@@ -313,6 +308,7 @@ body {
     font-size: 1.5rem;
     transform: rotate(0deg);
     transition: transform 0.3s ease;
+    color: white;
   }
 
   .top-nav.show + .nav-toggle-arrow {

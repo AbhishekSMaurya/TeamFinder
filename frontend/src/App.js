@@ -146,6 +146,7 @@ function Header({ darkMode, setDarkMode }) {
         </div>
 
 
+
         {/* Search bar */}
         <div className="search-container" style={{ width: '50vh' }}>
           <input
