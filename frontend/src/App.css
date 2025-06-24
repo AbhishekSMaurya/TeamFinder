@@ -250,23 +250,24 @@ body {
 }
 
 .nav-toggle-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .nav-toggle-arrow {
-  display: none;
+    display: none;
 }
+
 .top-nav {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 1rem;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-        .header {
+    .header {
         flex-direction: row;
         height: 75px;
         padding: 10px;
@@ -288,14 +289,15 @@ body {
     .sidebar {
         width: 180px;
     }
-   .nav-toggle-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
 
-  .nav-toggle-arrow {
+    .nav-toggle-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .nav-toggle-arrow {
         background: #0000008c;
         border: 1px solid black;
         color: #fff;
@@ -309,21 +311,32 @@ body {
         right: -96px;
     }
 
-  .top-nav {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #3498db;
-    border-radius: 10px;
-    padding: 0.5rem;
-    z-index: 10;
-    display: none;
-  }
+    .top-nav {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #3498db;
+        border-radius: 10px;
+        padding: 0.5rem;
+        z-index: 10;
+        display: none;
+    }
 
-  .top-nav.show {
-    display: flex;
-  }
+    .top-nav.show {
+        display: flex;
+    }
+
+    /* Base style for arrow */
+    .nav-toggle-arrow {
+        transition: transform 0.3s ease;
+    }
+
+    /* Rotate arrow when nav is open */
+    .nav-toggle-arrow.open {
+        transform: rotate(180deg);
+    }
+
 }
 
 
@@ -364,7 +377,7 @@ main {
 
 
 .profile-section h2 {
-    color:#121212;
+    color: #121212;
     text-align: center;
     margin-bottom: 15px;
 }
@@ -382,8 +395,8 @@ form label {
     color: #121212;
 }
 
-.dark form label{
-    color:#fff;
+.dark form label {
+    color: #fff;
 }
 
 form input {
@@ -503,11 +516,6 @@ button[type="submit"]:hover {
     color: black;
 }
 
-.light-mode .team-section h2 {
-    color: black;
-    /* Ensures visibility in light mode */
-}
-
 .dark-mode .team-section h2 {
     color: white;
     /* Ensures visibility in dark mode */
@@ -540,8 +548,8 @@ button[type="submit"]:hover {
     color: #121212;
 }
 
-.dark .text-tr{
-    color:#fff;
+.dark .text-tr {
+    color: #fff;
 }
 
 .dark-mode .team-section {
@@ -576,21 +584,21 @@ button[type="submit"]:hover {
 }
 
 @media screen and (max-width: 768px) {
-  body {
-    padding: 0;
-    font-size: 15px;
-  }
+    body {
+        padding: 0;
+        font-size: 15px;
+    }
 
-  .wrapper {
-    margin: 0;
-    padding: 1rem;
-  }
+    .wrapper {
+        margin: 0;
+        padding: 1rem;
+    }
 
-  .card {
-    padding: 1rem;
-  }
+    .card {
+        padding: 1rem;
+    }
 
-  .top-bar h1 {
-    font-size: 1.5rem;
-  }
+    .top-bar h1 {
+        font-size: 1.5rem;
+    }
 }

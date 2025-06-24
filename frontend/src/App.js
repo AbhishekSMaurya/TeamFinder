@@ -132,7 +132,7 @@ function Header({ darkMode, setDarkMode }) {
         <img src="/1.jpg" alt="Logo" className="imglogo" href="src/app.js" />
         <div className="nav-toggle-wrapper">
           <button
-            className="nav-toggle-arrow"
+            className={`nav-toggle-arrow ${showNav ? "open" : ""}`}
             onClick={() => setShowNav(prev => !prev)}
           >
             ▼
