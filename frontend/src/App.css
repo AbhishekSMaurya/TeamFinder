@@ -239,6 +239,31 @@ body {
     margin: 80px;
 }
 
+.result-item {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  margin: 12px 0;
+  transition: transform 0.2s ease-in-out;
+}
+
+.result-item:hover {
+  transform: scale(1.02);
+}
+
+.result-item h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #222;
+}
+
+.result-item p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
 .top-nav {
     display: flex;
     gap: 20px;
@@ -380,6 +405,19 @@ body {
     .nav-toggle-arrow.open {
         transform: rotate(180deg);
     }
+
+    .result-item {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .result-item h3 {
+    font-size: 16px;
+  }
+
+  .result-item p {
+    font-size: 13px;
+  }
 
 }
 
