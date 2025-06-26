@@ -345,7 +345,6 @@ function Home() {
                 onChange={handleInputChange}
                 min="1"
                 max="40"
-                style={{ color: 'black' }}
                 placeholder="Availablity(in hours)"
                 required
               />
