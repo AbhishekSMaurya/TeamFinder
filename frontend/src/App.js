@@ -69,8 +69,8 @@ export default function App() {
 
 function Header({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState(""); // State for search input
-  const [results, setResults] = useState([]); // State for search results
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -78,6 +78,7 @@ function Header({ darkMode, setDarkMode }) {
   // Toggle mobile search bar
   const handleToggle = () => {
     setMobileSearchOpen(!mobileSearchOpen);
+    if (!mobileSearchOpen) setShowNav(false); // Hide nav when search opens
   };
 
   // Search functionality
@@ -86,7 +87,6 @@ function Header({ darkMode, setDarkMode }) {
       alert("Please enter a search term");
       return;
     }
-    
     fetch("https://teamfinder-53lz.onrender.com/api/teammates")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch teammates");

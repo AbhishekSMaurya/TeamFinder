@@ -648,6 +648,16 @@ button[type="submit"]:hover {
     color: white;
 }
 
+.mobile-search-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
 @media screen and (max-width: 768px) {
     body {
         padding: 0;
@@ -667,34 +677,34 @@ button[type="submit"]:hover {
         font-size: 1.5rem;
     }
 .search-container {
-    width: 100%;
-    justify-content: flex-end;
-    padding: 0 10px;
-  }
-
-  .search-container input {
-    position: absolute;
-    left: 10px;
-    right: 50px;
-    transition: width 0.3s ease, opacity 0.3s ease;
+    max-width: 100%;
+    margin: 0 10px;
+    order: 3;
     width: 0;
     opacity: 0;
     padding: 0;
     pointer-events: none;
+    transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
   }
 
-  .search-container.active input {
-    width: calc(100% - 60px);
+  .search-container.active {
+    width: 100%;
     opacity: 1;
-    padding: 10px 16px;
+    padding: 10px 0;
     pointer-events: auto;
+    order: 2;
   }
 
-  .search-container button {
-    z-index: 1;
-    background-color: #5b8dfc;
-    color: white;
-    border-radius: 50%;
-    padding: 10px;
+  .search-container.active button {
+    display: flex;
+  }
+
+  .search-container input {
+    width: calc(100% - 50px);
+  }
+
+  .mobile-search-toggle {
+    display: block;
+    order: 2;
   }
 }
