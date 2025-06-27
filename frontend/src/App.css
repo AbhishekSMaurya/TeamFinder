@@ -670,33 +670,35 @@ button[type="submit"]:hover {
     .top-bar h1 {
         font-size: 1.5rem;
     }
-     .search-container {
-    flex-direction: column;
-    align-items: stretch;
-    margin: 0 auto;
-    padding: 10px;
+.search-container {
     width: 100%;
-    max-width: 400px;
+    justify-content: flex-end;
+    padding: 0 10px;
   }
 
   .search-container input {
-    width: 100%;
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 20px;
+    position: absolute;
+    left: 10px;
+    right: 50px;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  .search-container.active input {
+    width: calc(100% - 60px);
+    opacity: 1;
+    padding: 10px 16px;
+    pointer-events: auto;
   }
 
   .search-container button {
-    position: static;
-    margin-top: 8px;
-    padding: 10px 16px;
-    font-size: 16px;
-    border-radius: 20px;
+    z-index: 1;
+    background-color: #5b8dfc;
     color: white;
-    background-color: var(--btn-color);
-  }
-
-  .search-container button:hover {
-    background-color: var(--btn-hover);
+    border-radius: 50%;
+    padding: 10px;
   }
 }
