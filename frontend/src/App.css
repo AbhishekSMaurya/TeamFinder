@@ -680,60 +680,62 @@ button[type="submit"]:hover {
 
     .search-container {
         position: relative;
-        max-width: 100%;
-        width: 0;
-        opacity: 0;
-        padding: 0;
-        margin: 0 10px;
-        order: 3;
-        pointer-events: none;
-        transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        flex: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin: 0 10px;
+        order: 3;
+        max-width: 100%;
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
     }
 
-    /* Show when active */
+    /* Show on toggle */
     .search-container.active {
-        width: 100%;
+        height: 50px;
         opacity: 1;
-        padding: 10px 0;
-        order: 2;
         pointer-events: auto;
+        padding: 0 10px;
+        order: 2;
     }
 
-    /* The input field */
+    /* Search input field */
     .search-container input {
         width: 100%;
-        padding: 10px 16px;
+        height: 40px;
+        padding: 0 16px;
+        font-size: 14px;
         border: 1px solid #ccc;
         border-radius: 20px;
-        font-size: 14px;
-        background-color: white;
-        outline: none;
         box-sizing: border-box;
+        background: white;
+        outline: none;
     }
 
-    /* Optional: hide/show button inside the container */
+    /* Search button inside container (optional) */
     .search-container button {
         display: none;
+        margin-left: 10px;
         background-color: #5b8dfc;
         color: white;
         border: none;
         border-radius: 50%;
-        padding: 10px;
         width: 40px;
         height: 40px;
-        margin-left: 8px;
         align-items: center;
         justify-content: center;
     }
 
+    /* Show button when active */
     .search-container.active button {
         display: flex;
     }
 
-    /* Toggle icon (e.g., magnifying glass icon on header) */
+    /* Toggle icon (usually placed in header) */
     .mobile-search-toggle {
         display: block;
         order: 0;
