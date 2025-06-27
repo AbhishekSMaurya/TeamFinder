@@ -260,38 +260,33 @@ body {
 /* 📱 Responsive Fixes */
 @media (max-width: 768px) {
     .search-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Hide actual search input and button */
-  .search-bar,
-  .search-btn {
-    display: none;
-  }
-
-  /* Fake search icon button using ::before */
-  .search-container::before {
-    content: "🔍";
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    color: white;
-    background-color: transparent;
-    border: none;
-  }
-
-  /* Optional: when input is focused, show full search */
-  .search-container:focus-within .search-bar,
-  .search-container:focus-within .search-btn {
-    display: inline-block;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0 auto;
+    padding: 10px;
     width: 100%;
-    margin-top: 0.5rem;
+    max-width: 400px;
   }
 
-  .search-container:focus-within::before {
-    display: none;
+  .search-container input {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 20px;
+  }
+
+  .search-container button {
+    position: static;
+    margin-top: 8px;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    color: white;
+    background-color: var(--btn-color);
+  }
+
+  .search-container button:hover {
+    background-color: var(--btn-hover);
   }
  
 }
@@ -379,33 +374,6 @@ body {
         justify-content: center;
         gap: 20px;
     }
-
-    .search-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-container input {
-    width: 100%;
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  .search-container button {
-    position: relative;
-    margin-top: 10px;
-    align-self: center;
-    font-size: 16px;
-    color: white;
-    background-color: var(--btn-color);
-    border-radius: 20px;
-    padding: 8px 20px;
-  }
-
-  .search-container button:hover {
-    background-color: var(--btn-hover);
-  }
-
     .sidebar {
         width: 180px;
     }
