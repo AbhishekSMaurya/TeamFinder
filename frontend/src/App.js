@@ -114,6 +114,10 @@ function Header({ darkMode, setDarkMode }) {
       handleSearch();
     }
   };
+  document.querySelector('.mobile-search-toggle').addEventListener('click', () => {
+  document.querySelector('.search-container').classList.toggle('active');
+});
+
 
   return (
     <header className="header">
