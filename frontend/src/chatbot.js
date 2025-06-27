@@ -13,7 +13,7 @@ const Chatbot = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/feedback", {
+      const response = await axios.post("https://teamfinder-53lz.onrender.com/api/feedback", {
         email,
         feedback,
       });
