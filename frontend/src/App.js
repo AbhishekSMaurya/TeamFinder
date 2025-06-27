@@ -74,6 +74,15 @@ function Header({ darkMode, setDarkMode }) {
   const [input, setInput] = useState('');
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  const handleToggle = () => {
+    if (window.innerWidth <= 768) {
+      setMobileSearchOpen(!mobileSearchOpen);
+    } else {
+      handleSearch(); // Desktop behavior — search immediately
+    }
+  };
 
 
   const handleSearch = () => {
@@ -148,14 +157,14 @@ function Header({ darkMode, setDarkMode }) {
 
 
         {/* Search bar */}
-        <div className="search-container" style={{ width: '50vh' }}>
+        <div className={`search-container ${mobileSearchOpen ? 'active' : ''}`} style={{ width: '50vh' }}>
           <input
             type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search..."
           />
-          <button onClick={handleSearch}>
+          <button onClick={mobileSearchOpen ? handleSearch : handleToggle}>
             🔍
           </button>
         </div>
