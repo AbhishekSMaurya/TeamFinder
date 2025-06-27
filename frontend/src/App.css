@@ -679,34 +679,64 @@ button[type="submit"]:hover {
     }
 
     .search-container {
+        position: relative;
         max-width: 100%;
-        margin: 0 10px;
-        order: 3;
         width: 0;
         opacity: 0;
         padding: 0;
+        margin: 0 10px;
+        order: 3;
         pointer-events: none;
         transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
+    /* Show when active */
     .search-container.active {
         width: 100%;
         opacity: 1;
         padding: 10px 0;
-        pointer-events: auto;
         order: 2;
+        pointer-events: auto;
+    }
+
+    /* The input field */
+    .search-container input {
+        width: 100%;
+        padding: 10px 16px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        font-size: 14px;
+        background-color: white;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    /* Optional: hide/show button inside the container */
+    .search-container button {
+        display: none;
+        background-color: #5b8dfc;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        margin-left: 8px;
+        align-items: center;
+        justify-content: center;
     }
 
     .search-container.active button {
         display: flex;
     }
 
-    .search-container input {
-        width: calc(100% - 50px);
-    }
-
+    /* Toggle icon (e.g., magnifying glass icon on header) */
     .mobile-search-toggle {
         display: block;
-        order: 2;
+        order: 0;
     }
+
 }
