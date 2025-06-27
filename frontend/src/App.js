@@ -154,8 +154,9 @@ function Header({ darkMode, setDarkMode }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Search..."
+            className="search-bar"
           />
-          <button onClick={handleSearch}>
+          <button onClick={handleSearch} className="search-btn">
             🔍
           </button>
         </div>

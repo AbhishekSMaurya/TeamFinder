@@ -259,6 +259,40 @@ body {
 
 /* 📱 Responsive Fixes */
 @media (max-width: 768px) {
+    .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hide actual search input and button */
+  .search-bar,
+  .search-btn {
+    display: none;
+  }
+
+  /* Fake search icon button using ::before */
+  .search-container::before {
+    content: "🔍";
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+
+  /* Optional: when input is focused, show full search */
+  .search-container:focus-within .search-bar,
+  .search-container:focus-within .search-btn {
+    display: inline-block;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .search-container:focus-within::before {
+    display: none;
+  }
  
 }
 
