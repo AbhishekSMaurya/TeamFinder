@@ -257,8 +257,6 @@ body {
   color: #5b8dfc;
 }
 
-/* 📱 Responsive Fixes */
-
 
 
 
@@ -672,4 +670,33 @@ button[type="submit"]:hover {
     .top-bar h1 {
         font-size: 1.5rem;
     }
+     .search-container {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0 auto;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .search-container input {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 20px;
+  }
+
+  .search-container button {
+    position: static;
+    margin-top: 8px;
+    padding: 10px 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    color: white;
+    background-color: var(--btn-color);
+  }
+
+  .search-container button:hover {
+    background-color: var(--btn-hover);
+  }
 }
