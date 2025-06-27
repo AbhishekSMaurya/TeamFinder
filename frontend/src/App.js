@@ -69,119 +69,122 @@ export default function App() {
 
 function Header({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
-  // const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-  const [input, setInput] = useState('');
+  const [search, setSearch] = useState(""); // State for search input
+  const [results, setResults] = useState([]); // State for search results
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+  // Toggle mobile search bar
   const handleToggle = () => {
-    if (window.innerWidth <= 768) {
-      setMobileSearchOpen(!mobileSearchOpen);
-    } else {
-      handleSearch(); // Desktop behavior — search immediately
+    setMobileSearchOpen(!mobileSearchOpen);
+  };
+
+  // Search functionality
+  const handleSearch = () => {
+    if (!search.trim()) {
+      alert("Please enter a search term");
+      return;
+    }
+    
+    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch teammates");
+        return res.json();
+      })
+      .then((data) => {
+        const filtered = data.filter(
+          (teammate) =>
+            teammate.name.toLowerCase().includes(search.toLowerCase()) ||
+            teammate.skills.toLowerCase().includes(search.toLowerCase()) ||
+            teammate.preferences.toLowerCase().includes(search.toLowerCase())
+        );
+        setResults(filtered);
+        navigate("/search", { state: { results: filtered } });
+      })
+      .catch((err) => {
+        console.error("Error loading teammates:", err);
+        alert("Error performing search");
+      });
+  };
+
+  // Handle search on Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
     }
   };
 
-
-  const handleSearch = () => {
-    const filtered = teammates.filter(teammate =>
-      teammate.name.toLowerCase().includes(input.toLowerCase()) ||
-      teammate.skills.toLowerCase().includes(input.toLowerCase()) ||
-      teammate.preferences.toLowerCase().includes(input.toLowerCase())
-    );
-
-    navigate('/search', { state: { results: filtered } });
-    setResults(filtered);
-    setResults(results);
-  };
-  // Load teammates once
-  const [teammates, setTeammates] = useState([]);
-  useEffect(() => {
-    fetch("https://teamfinder-53lz.onrender.com/api/teammates")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Teammates loaded:", data); // ✅ Check data format
-        setTeammates(data);
-      })
-      .catch((err) => console.error("Error loading teammates:", err));
-  }, []);
-
-  // Handle search
   return (
-    <>
-      <header className="header">
-        {/* Sidebar Toggle */}
-        <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-          ☰
+    <header className="header">
+      {/* Sidebar Toggle */}
+      <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+        ☰
+      </button>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+        <button className="close-btn" onClick={() => setIsOpen(false)}>
+          ✖
         </button>
+        <ul>
+          {["Messages", "Posts", "Explore", "Projects", "Announcements"].map(
+            (item, index) => (
+              <li key={index}>
+                <Link to={`/${item.toLowerCase()}`} onClick={() => setIsOpen(false)}>
+                  {item}
+                </Link>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
 
-        {/* Sidebar */}
-        <div className={`sidebar ${isOpen ? "open" : ""}`}>
-          <button className="close-btn" onClick={() => setIsOpen(false)}>✖</button>
-          <ul>
-            {/* Friends */}
-            {["Messages", "Posts", "Explore", "Projects", "Announcements"].map(
-              (item, index) => (
-                <li key={index}>
-                  <Link
-                    to={`/${item.toLowerCase()}`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                </li>
-              )
-            )}
-          </ul>
-        </div>
+      {/* Logo */}
+      <img src="/1.jpg" alt="Logo" className="imglogo" />
 
-        {/* Navbar */}
-        <img src="/1.jpg" alt="Logo" className="imglogo" href="src/app.js" />
-        <div className="nav-toggle-wrapper">
-          <button
-            className={`nav-toggle-arrow ${showNav ? "open" : ""}`}
-            onClick={() => setShowNav(prev => !prev)}
-          >
-            ▼
-          </button>
-          <nav className={`top-nav ${showNav ? "show" : ""}`}>
-            <Link to="/home">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/support">Support</Link>
-            <Link to="/teams">Teams</Link>
-          </nav>
-        </div>
-
-
-
-        {/* Search bar */}
-        <div className={`search-container ${mobileSearchOpen ? 'active' : ''}`} style={{ width: '50vh' }}>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search..."
-          />
-          <button onClick={mobileSearchOpen ? handleSearch : handleToggle}>
-            🔍
-          </button>
-        </div>
-
-        {/* Dark mode toggle */}
+      {/* Navbar */}
+      <div className="nav-toggle-wrapper">
         <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="p-2 bg-gray-200 dark:bg-gray-800 rounded-full transition-all duration-300 bulb"
+          className={`nav-toggle-arrow ${showNav ? "open" : ""}`}
+          onClick={() => setShowNav((prev) => !prev)}
         >
-          {darkMode ? <Sun size={30} color="yellow" /> : <Moon size={30} color="black" />}
+          ▼
         </button>
-      </header>
+        <nav className={`top-nav ${showNav ? "show" : ""}`}>
+          <Link to="/home">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/support">Support</Link>
+          <Link to="/teams">Teams</Link>
+        </nav>
+      </div>
 
-      {/* Search results below header */}
+      {/* Search Bar */}
+      <div className={`search-container ${mobileSearchOpen ? "active" : ""}`}>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Search teammates..."
+          className="search-input"
+        />
+        <button onClick={handleSearch}>🔍</button>
+      </div>
 
-    </>
+      {/* Mobile Search Toggle Button */}
+      <button className="mobile-search-toggle" onClick={handleToggle}>
+        {mobileSearchOpen ? "✖" : "🔍"}
+      </button>
 
+      {/* Dark Mode Toggle */}
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="p-2 bg-gray-200 dark:bg-gray-800 rounded-full transition-all duration-300 bulb"
+      >
+        {darkMode ? <Sun size={30} color="yellow" /> : <Moon size={30} color="black" />}
+      </button>
+    </header>
   );
 }
 
