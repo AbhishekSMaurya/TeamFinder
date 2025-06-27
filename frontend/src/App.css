@@ -307,11 +307,7 @@ body {
 }
 
 /* Search Bar */
-.search-container input {
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-}
+
 
 .nav-toggle-wrapper {
     position: relative;
