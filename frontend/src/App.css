@@ -251,6 +251,7 @@ body {
     font-size: 18px;
     color: #333;
     cursor: pointer;
+    top:7px;
 }
 
 .search-container button:hover {
@@ -538,7 +539,7 @@ button[type="submit"]:hover {
     justify-content: center;
     width: 90%;
     max-width: 500px;
-    margin-bottom: 20px;
+    margin-bottom: 6px;
 }
 
 #searchInput {
