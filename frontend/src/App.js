@@ -338,10 +338,13 @@ function Home() {
               <p className="hero-subtext">
                 Match with like-minded developers and build awesome projects together!
               </p>
-              <div className="cta-buttons">
-                <button className="get-started-btn" onClick={() => setModalVisible(true)}>Get Started</button>
-                <Link to="/login" className="signup-btn">Sign In</Link>
-              </div>
+              {!signedUpUser && (
+                <div className="cta-buttons">
+                  <button className="get-started-btn" onClick={() => setModalVisible(true)}>Get Started</button>
+                  <Link to="/login" className="signup-btn">Sign In</Link>
+                </div>
+              )}
+
             </div>
             <div className="hero-image">
               <img src="0ba630ae-55d9-49a5-98fa-693407a16890.png" alt="TeamFinder" />
