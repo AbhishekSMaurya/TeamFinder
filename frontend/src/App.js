@@ -211,7 +211,10 @@ function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [teamList, setTeamList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [signedUpUser, setSignedUpUser] = useState(null);
+  const [signedUpUser, setSignedUpUser] = useState(
+    JSON.parse(localStorage.getItem("loggedInUser")) || null
+  );
+
 
 
   const handleInputChange = (e) => {
@@ -241,6 +244,10 @@ function Home() {
       name: formData.name,
       avatar: avatar
     });
+    localStorage.setItem("loggedInUser", JSON.stringify({
+      name: formData.name,
+      avatar: avatarUrl
+    }));
 
 
     // ✅ POST the data to your backend
@@ -298,9 +305,9 @@ function Home() {
   );
 
   return (
-    <main>
-      <section className="profile-section">
-        {signedUpUser ? (
+    <main className="hero-section">
+      {signedUpUser ? (
+        <section className="profile-section">
           <div className="user-profile">
             <div className="avatar-wrapper">
               <img
@@ -312,100 +319,70 @@ function Home() {
               {modalVisible && (
                 <div className="dropdown">
                   <p>👋 Hello, {signedUpUser.name}</p>
-                  <button onClick={() => setSignedUpUser(null)}>Logout</button>
+                  <button onClick={() => {
+                    setSignedUpUser(null);
+                    localStorage.removeItem("loggedInUser");
+                  }}>Logout</button>
                 </div>
               )}
             </div>
             <h2>Welcome {signedUpUser.name}!</h2>
             <p>Thanks for signing up. This is your custom dashboard space.</p>
           </div>
-        ) : (
-          <>
-            <h2>Create Your Profile</h2>
-
-            <form id="profile-form" onSubmit={handleSubmit} >
-              <label htmlFor="name">Name:</label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Enter your name"
-                required
-              />
-              <label htmlFor="email">Email:</label>
-              <input type="text" id="email" value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-
-              <label htmlFor="skills">Skills (comma-separated):</label>
-              <input
-                type="text"
-                id="skills"
-                value={formData.skills}
-                onChange={handleInputChange}
-                placeholder="e.g., Frontend, Backend, UI/UX"
-                required
-              />
-
-              <label htmlFor="availability">Availability (hours/week):</label>
-              <input
-                type="number"
-                id="availability"
-                value={formData.availability}
-                onChange={handleInputChange}
-                min="1"
-                max="40"
-                placeholder="Availablity(in hours)"
-                required
-              />
-
-              <label htmlFor="preferences">Project Preferences:</label>
-              <input
-                type="text"
-                id="preferences"
-                value={formData.preferences}
-                onChange={handleInputChange}
-                placeholder="e.g., Healthcare, EdTech"
-                required
-              />
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Create a password"
-                required
-              />
-
-              <label htmlFor="confirmPassword">Confirm Password:</label>
-              <input
-                type="password"
-                id="confirmPassword" // ✅ Fix: Ensure it matches the state key
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                placeholder="Confirm your password"
-                required
-              />
-              <Link to="/login" className="login-link">or Login</Link>
-              <button type="submit" id="submitBtn">Submit</button>
-            </form>
-          </>
-        )}
-        {modalVisible && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={() => setModalVisible(false)}>
-                &times;
-              </span>
-              <p>Submitted successfully!</p>
+        </section>
+      ) : (
+        <>
+          <section className="hero-banner">
+            <div className="hero-content">
+              <h1 className="hero-title">🚀 Welcome to TeamFinder</h1>
+              <p className="hero-subtext">
+                Match with like-minded developers and build awesome projects together!
+              </p>
+              <div className="cta-buttons">
+                <button className="get-started-btn" onClick={() => setModalVisible(true)}>Get Started</button>
+                <button className="signup-btn" onClick={() => setModalVisible(true)}>Sign Up</button>
+              </div>
             </div>
-          </div>
-        )}
-      </section>
+            <div className="hero-image">
+              <img src="0ba630ae-55d9-49a5-98fa-693407a16890.png" alt="TeamFinder" />
+            </div>
+          </section>
+
+          {modalVisible && (
+            <div className="modal">
+              <div className="modal-content">
+                <span className="close" onClick={() => setModalVisible(false)}>&times;</span>
+                <h2>Create Your Profile</h2>
+                <form id="profile-form" onSubmit={handleSubmit}>
+                  <label htmlFor="name">Name:</label>
+                  <input type="text" id="name" value={formData.name} onChange={handleInputChange} required />
+
+                  <label htmlFor="email">Email:</label>
+                  <input type="text" id="email" value={formData.email} onChange={handleInputChange} required />
+
+                  <label htmlFor="skills">Skills (comma-separated):</label>
+                  <input type="text" id="skills" value={formData.skills} onChange={handleInputChange} required />
+
+                  <label htmlFor="availability">Availability (hours/week):</label>
+                  <input type="number" id="availability" value={formData.availability} onChange={handleInputChange} required />
+
+                  <label htmlFor="preferences">Project Preferences:</label>
+                  <input type="text" id="preferences" value={formData.preferences} onChange={handleInputChange} required />
+
+                  <label htmlFor="password">Password:</label>
+                  <input type="password" id="password" value={formData.password} onChange={handleInputChange} required />
+
+                  <label htmlFor="confirmPassword">Confirm Password:</label>
+                  <input type="password" id="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
+
+                  <Link to="/login" className="login-link">or Login</Link>
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       <section className="team-section" id="teams">
         <h2>Suggested Teammates</h2>

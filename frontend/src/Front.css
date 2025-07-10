@@ -1,23 +1,116 @@
   .popup {
     position: absolute;
-    top: 60px; /* adjust according to your layout */
+    top: 60px;
+    /* adjust according to your layout */
     left: 0;
     width: 100%;
     background: white;
     border: 1px solid #ccc;
     z-index: 10;
     padding: 1rem;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+
+  .hero-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: white;
+    border-radius: 20px;
+  }
+
+  .hero-content {
+    max-width: 50%;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .hero-subtext {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .get-started-btn,
+  .signup-btn {
+    background-color: #ff7f50;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .hero-image img {
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  @media only screen and (max-width: 768px) {
+    .hero-banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .hero-content {
+      max-width: 100%;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtext {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .get-started-btn,
+    .signup-btn {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .hero-image {
+      margin-top: 2rem;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+
   .avatar-wrapper {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px; /* Adjust as needed */
+    margin-top: 40px;
+    /* Adjust as needed */
   }
-  
+
   .avatar-image {
     width: 100px;
     height: 100px;
@@ -26,7 +119,7 @@
     cursor: pointer;
     border: 2px solid #ccc;
   }
-  
+
   .dropdown {
     position: absolute;
     top: 110%;
@@ -41,16 +134,17 @@
     min-width: 180px;
     z-index: 1000;
   }
-  
+
   .dropdown-greeting {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 12px;
     color: #333;
   }
-  
+
   .logout-button {
-    background-color: #ef4444; /* Tailwind's red-500 */
+    background-color: #ef4444;
+    /* Tailwind's red-500 */
     color: white;
     padding: 8px 16px;
     border: none;
@@ -59,11 +153,12 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
+
   .logout-button:hover {
-    background-color: #dc2626; /* darker red on hover */
+    background-color: #dc2626;
+    /* darker red on hover */
   }
-  
+
   .user-profile {
     background: #f9f9f9;
     padding: 20px;
@@ -72,17 +167,17 @@
     margin: 0 auto;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color:black;
-  }
-
-  .user-profile h2{
     color: black;
   }
-  
+
+  .user-profile h2 {
+    color: black;
+  }
+
   .avatar-wrapper {
     position: relative;
   }
-  
+
   .avatar {
     width: 80px;
     height: 80px;
@@ -91,11 +186,11 @@
     border: 2px solid #ddd;
     transition: transform 0.3s ease;
   }
-  
+
   .avatar:hover {
     transform: scale(1.1);
   }
-  
+
   .dropdown {
     position: absolute;
     top: 100%;
@@ -110,12 +205,12 @@
     text-align: center;
     z-index: 10;
   }
-  
+
   .dropdown p {
     font-size: 14px;
     margin-bottom: 10px;
   }
-  
+
   .logout-button {
     background-color: #ff4d4d;
     color: white;
@@ -126,21 +221,19 @@
     font-size: 14px;
     transition: background-color 0.3s ease;
   }
-  
+
   .logout-button:hover {
     background-color: #e03e3e;
   }
-  
+
   .welcome-message {
     margin-top: 20px;
     font-size: 18px;
     color: #333;
   }
-  
+
   .dashboard-message {
     color: #666;
     font-size: 14px;
     margin-top: 10px;
   }
-  
-  
