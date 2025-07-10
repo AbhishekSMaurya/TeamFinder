@@ -112,6 +112,11 @@
   position: relative;
   animation: zoomIn 0.3s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+}
+
+.dark .modal-content{
+  color:#494444;
 }
 
 @keyframes zoomIn {
