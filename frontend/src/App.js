@@ -334,7 +334,7 @@ function Home() {
         <>
           <section className="hero-banner">
             <div className="hero-content">
-              <h1 className="hero-title">🚀 Welcome to TeamFinder</h1>
+              <h1 className="hero-title"> Welcome to TeamFinder</h1>
               <p className="hero-subtext">
                 Match with like-minded developers and build awesome projects together!
               </p>

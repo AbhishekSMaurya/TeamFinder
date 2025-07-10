@@ -17,13 +17,13 @@
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  background: linear-gradient(to right, #1a0033, #2c0057);
   min-height: 100vh;
   color: white;
   text-align: center;
 }
 
 .hero-banner {
+  background: linear-gradient(to right, #1a0033, #2c0057);
   display: flex;
   justify-content: space-between;
   align-items: center;
