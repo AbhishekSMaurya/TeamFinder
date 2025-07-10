@@ -210,6 +210,9 @@
       width: 100%;
       max-width: 280px;
     }
+    .modal-content .close{
+      top:65px;
+    }
   }
 
   .avatar-wrapper {

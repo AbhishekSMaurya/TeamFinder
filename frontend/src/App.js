@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation 
 import { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Mail, Phone, MessageCircle } from "lucide-react";
+// import Header from "./Header.js";
 import "./App.css";
 import "./About.css";
 // import { submitbutton } from "./script";
