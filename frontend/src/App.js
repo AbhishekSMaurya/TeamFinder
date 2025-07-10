@@ -379,7 +379,7 @@ function Home() {
                   <input type="password" id="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
             
                   <Link to="/login" className="login-link">or Login</Link>
-                  <Link to="/home" className="login-link">Not Now</Link>
+                  <span className="login-link" onClick={()=>(setModalVisible(false))}>Not Now</span>
                   <button type="submit">Submit</button>
                 </form>
               </div>
