@@ -242,7 +242,7 @@ function Home() {
     const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.name}`;
     setSignedUpUser({
       name: formData.name,
-      avatar: avatar
+      avatar: avatarUrl
     });
     localStorage.setItem("loggedInUser", JSON.stringify({
       name: formData.name,
