@@ -118,6 +118,9 @@
 .dark .modal-content{
   color:#494444;
 }
+.dark .modal-content h2{
+  color: #fff;
+}
 
 @keyframes zoomIn {
   from { transform: scale(0.9); opacity: 0 }
