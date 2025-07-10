@@ -377,8 +377,9 @@ function Home() {
 
                   <label htmlFor="confirmPassword">Confirm Password:</label>
                   <input type="password" id="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
-
+            
                   <Link to="/login" className="login-link">or Login</Link>
+                  <Link to="/home" className="login-link">Not Now</Link>
                   <button type="submit">Submit</button>
                 </form>
               </div>
