@@ -503,29 +503,7 @@ button[type="submit"]:hover {
     color: #fff;
 }
 
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    /* Darkened backdrop for readability */
-    justify-content: center;
-    align-items: center;
-}
 
-.modal-content {
-    background: #222;
-    /* Darker shade for dark mode */
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 300px;
-}
 
 .close {
     float: right;

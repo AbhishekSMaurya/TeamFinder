@@ -239,7 +239,7 @@ function Home() {
       preferences: formData.preferences,
       password: formData.password,
     };
-    const avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.name}`;
+    const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.name}`;
     setSignedUpUser({
       name: formData.name,
       avatar: avatar
