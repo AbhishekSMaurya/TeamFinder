@@ -340,7 +340,7 @@ function Home() {
               </p>
               <div className="cta-buttons">
                 <button className="get-started-btn" onClick={() => setModalVisible(true)}>Get Started</button>
-                <button className="signup-btn" onClick={() => setModalVisible(true)}>Sign Up</button>
+                <Link to="/login" className="signup-btn">Sign In</Link>
               </div>
             </div>
             <div className="hero-image">
