@@ -23,7 +23,7 @@
   }
 
   .dark .hero-banner {
-    background: linear-gradient(26deg, #1a0033, #8130d0);
+    background: linear-gradient(297deg, #1a0033, #8130d0);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,8 +69,7 @@
 
   .hero-subtext {
     margin-bottom: 1.5rem;
-    color: #ccc;
-    color: #e02323;
+    color: #3c2f75;
   }
 
   .dark .hero-subtext{
