@@ -39,6 +39,12 @@
     flex-wrap: wrap;
   }
 
+  .dark .hero-banner{
+    color:black;
+    background: none;
+    background-color: none;
+  }
+
   .hero-content {
     flex: 1;
     min-width: 250px;
