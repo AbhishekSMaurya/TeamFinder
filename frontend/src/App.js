@@ -348,7 +348,7 @@ function Home() {
 
             </div>
             <div className="hero-image">
-              <img src="D:\Abhishek Maurya\React Project App\third\frontend\src\Teamfinder.png" alt="TeamFinder" />
+              <img src="/Teamfinder.png"></img>
             </div>
           </section>
 
