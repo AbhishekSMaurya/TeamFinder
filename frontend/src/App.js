@@ -731,7 +731,6 @@ function Teams({ currentUser }) {
               placeholder="Members (comma separated)"
               value={newTeam.members}
               onChange={handleChange}
-              style={{ color: 'black' }}
               required
             />
             <input
@@ -740,7 +739,6 @@ function Teams({ currentUser }) {
               placeholder="Description"
               value={newTeam.description}
               onChange={handleChange}
-              style={{ color: 'black' }}
               required
             />
             <input
@@ -749,7 +747,6 @@ function Teams({ currentUser }) {
               placeholder="Skills (comma separated)"
               value={newTeam.skills}
               onChange={handleChange}
-              style={{ color: 'black' }}
               required
             />
             <button type="submit">Submit</button>
