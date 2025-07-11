@@ -40,6 +40,18 @@
   }
 
   .hero-banner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    max-width: 1100px;
+    margin: 2rem auto;
+    /* centers below header */
+    gap: 2rem;
+    flex-wrap: wrap;
     color:black;
     background: none;
     background-color: none;
