@@ -1871,7 +1871,7 @@ function Login({ onLogin }) {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          <Link to="/home" className="login-link">Go back</Link>
           <button type="submit">Login</button>
         </form>
       </div>
