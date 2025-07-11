@@ -320,7 +320,7 @@ function Home() {
               {modalVisible && (
                 <div className="dropdown">
                   <p>👋 Hello, {signedUpUser.name}</p>
-                  <button onClick={() => {
+                  <button className="logout-button"onClick={() => {
                     setSignedUpUser(null);
                     localStorage.removeItem("loggedInUser");
                   }}>Logout</button>
