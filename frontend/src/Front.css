@@ -70,6 +70,12 @@
   .hero-subtext {
     margin-bottom: 1.5rem;
     color: #ccc;
+    color: #e02323;
+  }
+
+  .dark .hero-subtext{
+    margin-bottom: 1.5rem;
+    color: #ccc;
   }
 
   .cta-buttons {
