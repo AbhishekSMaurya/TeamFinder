@@ -1,0 +1,35 @@
+<svg width="480" height="280" viewBox="0 0 480 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="480" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7b2ff2"/>
+      <stop offset="1" stop-color="#f357a8"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="480" height="280" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#500064" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect x="10" y="10" width="460" height="260" rx="32" fill="url(#bg-gradient)" filter="url(#shadow)"/>
+  <!-- Question Mark Circle -->
+  <circle cx="64" cy="80" r="36" fill="white" fill-opacity="0.18"/>
+  <text x="64" y="88" text-anchor="middle" font-size="48" font-weight="bold" fill="white" font-family="Segoe UI, Arial, sans-serif">?</text>
+  <!-- Q&A Content -->
+  <text x="120" y="62" font-size="18" font-weight="bold" fill="white" font-family="Segoe UI, Arial, sans-serif">Question:</text>
+  <text x="120" y="90" font-size="16" fill="white" font-family="Segoe UI, Arial, sans-serif">
+    We need help for this code. We need to find a person who can solve this.
+  </text>
+  <rect x="120" y="110" width="320" height="64" rx="16" fill="white" fill-opacity="0.13"/>
+  <text x="136" y="135" font-size="17" font-weight="bold" fill="white" font-family="Segoe UI, Arial, sans-serif">Answer:</text>
+  <text x="136" y="157" font-size="15" fill="white" font-family="Segoe UI, Arial, sans-serif">
+    TeamFinder — A place where you can find people
+  </text>
+  <text x="136" y="175" font-size="15" fill="white" font-family="Segoe UI, Arial, sans-serif">
+    with a lot of knowledge. We will help you find that person.
+  </text>
+  <!-- TeamFinder Logo/Globe Icon -->
+  <g transform="translate(372,223)">
+    <circle cx="22" cy="22" r="18" fill="#fff" fill-opacity="0.26"/>
+    <ellipse cx="22" cy="22" rx="13" ry="13" fill="#7b2ff2"/>
+    <path d="M22 10a12 12 0 0 0 0 24 12 12 0 0 0 0-24zm0 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20zm0 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z" fill="#fff"/>
+    <text x="42" y="27" font-size="13" fill="#fff" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">TeamFinder</text>
+  </g>
+</svg>
