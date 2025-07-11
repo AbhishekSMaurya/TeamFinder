@@ -303,10 +303,10 @@
     margin: 0 auto;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: white;
+    color: black;
   }
 
-  .user-profile h2 {
+  .user-profile h2,p {
     color: white;
   }
 
