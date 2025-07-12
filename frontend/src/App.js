@@ -312,7 +312,7 @@ function Home() {
           <div className="user-profile">
             <div className="avatar-wrapper">
               <img
-                src={signedUpUser.avatar}
+                src={signedUpUser.avatarUrl}
                 alt="User Avatar"
                 style={{ width: 80, height: 80, borderRadius: '50%', cursor: 'pointer' }}
                 onClick={() => setModalVisible(!modalVisible)}
