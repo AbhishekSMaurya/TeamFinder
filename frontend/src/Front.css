@@ -195,7 +195,7 @@
 
   .modal-content .close {
     position: absolute;
-    top: 0.8rem;
+    top: 4rem;
     right: 1rem;
     font-size: 1.8rem;
     cursor: pointer;
