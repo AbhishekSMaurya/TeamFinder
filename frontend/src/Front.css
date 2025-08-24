@@ -22,80 +22,80 @@
     text-align: center;
   }
 
-.dark .hero-banner {
-  background: rgba(18, 18, 18, 0.85); /* semi-transparent dark to match outer */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2.5rem 3rem;
-  border-radius: 1.25rem;
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  max-width: 1100px;
-  margin: 3rem auto;
-  gap: 2rem;
-  flex-wrap: wrap;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  .dark .hero-banner {
+    background: rgba(18, 18, 18, 0.85);
+    /* semi-transparent dark to match outer */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.5rem 3rem;
+    border-radius: 1.25rem;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    max-width: 1100px;
+    margin: 3rem auto;
+    gap: 2rem;
+    flex-wrap: wrap;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
 
-/* Add a subtle hover effect */
-.dark .hero-banner:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 255, 0.25);
-}
+  /* Add a subtle hover effect */
+  .dark .hero-banner:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 255, 0.25);
+  }
 
-/* Improve text hierarchy inside */
-.dark .hero-banner h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #00e5ff, #9b5de5);
-  -webkit-text-fill-color: transparent;
-}
+  /* Improve text hierarchy inside */
+  .dark .hero-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+  }
 
-.dark .hero-banner p {
-  font-size: 1.1rem;
-  color: #cccccc;
-  line-height: 1.6;
-  max-width: 600px;
-}
+  .dark .hero-banner p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    line-height: 1.6;
+    max-width: 600px;
+  }
 
-/* Button styling */
-.dark .hero-banner a {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-align: center;
-}
+  /* Button styling */
+  .dark .hero-banner a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
 
-.dark .hero-banner a:first-of-type {
-  background: #7c3aed;
-  color: #fff;
-  margin-right: 1rem;
-}
+  .dark .hero-banner a:first-of-type {
+    background: #7c3aed;
+    color: #fff;
+    margin-right: 1rem;
+  }
 
-.dark .hero-banner a:first-of-type:hover {
-  background: #9d4edd;
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
-}
+  .dark .hero-banner a:first-of-type:hover {
+    background: #9d4edd;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+  }
 
-.dark .hero-banner a:last-of-type {
-  background: #ef4444;
-  color: #fff;
-}
+  .dark .hero-banner a:last-of-type {
+    background: #ef4444;
+    color: #fff;
+  }
 
-.dark .hero-banner a:last-of-type:hover {
-  background: #dc2626;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
-}
+  .dark .hero-banner a:last-of-type:hover {
+    background: #dc2626;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+  }
 
 
-  .hero-banner{
+  .hero-banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -108,7 +108,7 @@
     /* centers below header */
     gap: 2rem;
     flex-wrap: wrap;
-    color:black;
+    color: black;
     background: none;
     background-color: none;
   }
@@ -128,7 +128,7 @@
     color: #3c2f75;
   }
 
-  .dark .hero-subtext{
+  .dark .hero-subtext {
     margin-bottom: 1.5rem;
     color: #ccc;
   }
@@ -150,7 +150,7 @@
   }
 
   .get-started-btn {
-    background-color: #8b5cf6;
+    background-color: #3d3946;
     color: white;
   }
 
@@ -289,8 +289,9 @@
       width: 100%;
       max-width: 280px;
     }
-    .modal-content .close{
-      top:65px;
+
+    .modal-content .close {
+      top: 65px;
     }
   }
 
@@ -362,7 +363,8 @@
     color: black;
   }
 
-  .user-profile h2,p {
+  .user-profile h2,
+  p {
     color: white;
   }
 
@@ -401,7 +403,7 @@
   .dropdown p {
     font-size: 14px;
     margin-bottom: 10px;
-    color:#121212;
+    color: #121212;
   }
 
   .logout-button {
