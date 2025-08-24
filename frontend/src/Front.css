@@ -22,21 +22,24 @@
     text-align: center;
   }
 
-  .dark .hero-banner {
-  background: linear-gradient(135deg, #1a0033 0%, #2c2c54 40%, #121212 100%);
+.dark .hero-banner {
+  background: rgba(18, 18, 18, 0.85); /* semi-transparent dark to match outer */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2.5rem 3rem;
   border-radius: 1.25rem;
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   max-width: 1100px;
   margin: 3rem auto;
   gap: 2rem;
   flex-wrap: wrap;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 /* Add a subtle hover effect */
 .dark .hero-banner:hover {
@@ -50,7 +53,6 @@
   font-weight: 700;
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #00e5ff, #9b5de5);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
