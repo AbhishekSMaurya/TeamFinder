@@ -23,21 +23,75 @@
   }
 
   .dark .hero-banner {
-    background: linear-gradient(297deg, #1a0033, #645c6c5e);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #121212;
-    color: white;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-    max-width: 1100px;
-    margin: 2rem auto;
-    /* centers below header */
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
+  background: linear-gradient(135deg, #1a0033 0%, #2c2c54 40%, #121212 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 3rem;
+  border-radius: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 255, 255, 0.15);
+  max-width: 1100px;
+  margin: 3rem auto;
+  gap: 2rem;
+  flex-wrap: wrap;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add a subtle hover effect */
+.dark .hero-banner:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 255, 0.25);
+}
+
+/* Improve text hierarchy inside */
+.dark .hero-banner h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00e5ff, #9b5de5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .hero-banner p {
+  font-size: 1.1rem;
+  color: #cccccc;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+/* Button styling */
+.dark .hero-banner a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.dark .hero-banner a:first-of-type {
+  background: #7c3aed;
+  color: #fff;
+  margin-right: 1rem;
+}
+
+.dark .hero-banner a:first-of-type:hover {
+  background: #9d4edd;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+}
+
+.dark .hero-banner a:last-of-type {
+  background: #ef4444;
+  color: #fff;
+}
+
+.dark .hero-banner a:last-of-type:hover {
+  background: #dc2626;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
 
   .hero-banner{
     display: flex;
