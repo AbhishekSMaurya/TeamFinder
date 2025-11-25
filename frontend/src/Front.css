@@ -362,8 +362,10 @@
     font-family: 'Inter', sans-serif;
    
   }
+ 
 
-  .user-profile h2,
+
+  .dark .user-profile h2,
   p {
     color: white;
   }
