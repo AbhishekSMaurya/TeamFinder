@@ -443,7 +443,15 @@ main {
 }
 
 
-
+.profile-section{
+     padding: 20px;
+    width: 90%;
+     border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(23, 195, 178, 0.25);
+    color: #222;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+}
 .profile-section h2 {
     color: #121212;
     text-align: center;
