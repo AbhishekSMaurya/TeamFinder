@@ -352,15 +352,15 @@
     /* darker red on hover */
   }
 
-  .user-profile {
-    background: linear-gradient(-12deg, #160e16, #fff);
-    padding: 20px;
-    border-radius: 10px;
+  .dark .user-profile {  
     width: 300px;
     margin: 0 auto;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: black;
+    border-radius: 10px;
+    color: #222;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+   
   }
 
   .user-profile h2,
