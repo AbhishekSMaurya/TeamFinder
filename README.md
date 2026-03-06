@@ -44,31 +44,7 @@
 This app uses **SQLite**, which is file-based and easy to use for demos and prototyping.  
 However, platforms like **Render** do not persist file storage on their free plan.  
 
-So:
 
-> 🔁 The database resets on each deployment.  
-> ✨ The app automatically reseeds mock content (Explore feed) every time.
-
-For a production-ready version, the backend can be migrated to **PostgreSQL** (Render) or **SQLite with persistent storage** (Railway/Fly.io).
-
----
-
-## 📸 Demo Highlights
-
-- ✅ React frontend that talks to a real Express API
-- ✅ SQLite-backed features with seeding
-- ✅ File uploads and static asset serving
-- ✅ Modern UI + interaction handling (likes/comments/feed)
-
----
-
-## 🧑‍💼 Why This Project?
-
-TeamFinder shows that I can:
-- Design and build a complete full-stack app
-- Work with real-world file handling and database logic
-- Deploy and debug apps in live environments
-- Solve challenges with practical trade-offs (like hosting limitations)
 
 ---
 
