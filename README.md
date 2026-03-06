@@ -46,7 +46,4 @@ However, platforms like **Render** do not persist file storage on their free pla
 
 
 
----
-
-## 📂 Project Structure
 
